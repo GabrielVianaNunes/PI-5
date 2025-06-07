@@ -1,5 +1,6 @@
 package br.com.autogyn.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -42,12 +43,23 @@ public class PagamentoService {
         pagamento.setValorPago(dto.getValorPago());
         pagamento.setFormaPagamento(dto.getFormaPagamento());
 
+        // Usa a data enviada ou define como agora
         LocalDateTime dataPagamento = dto.getDataPagamento() != null
                 ? dto.getDataPagamento()
                 : LocalDateTime.now();
-
         pagamento.setDataPagamento(dataPagamento);
-        pagamento.setStatus(dto.getStatus());
+
+        // Lógica de status e troco
+        BigDecimal valorOS = ordem.getValorTotal();
+        BigDecimal valorPago = dto.getValorPago();
+
+        if (valorPago.compareTo(valorOS) >= 0) {
+            pagamento.setStatus("PAGO");
+            pagamento.setTroco(valorPago.subtract(valorOS));
+        } else {
+            pagamento.setStatus("PENDENTE");
+            pagamento.setTroco(BigDecimal.ZERO);
+        }
 
         return pagamentoRepository.save(pagamento);
     }
