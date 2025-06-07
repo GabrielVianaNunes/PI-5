@@ -1,10 +1,19 @@
 package br.com.autogyn.model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ordens_servico")
@@ -25,8 +34,8 @@ public class OrdemDeServico {
     @Column(name = "data_abertura", nullable = false)
     private LocalDateTime dataAbertura;
 
-    @Column(name = "data_conclusao")
-    private LocalDateTime dataConclusao;
+    @Column(name = "data_fechamento") // alterado de dataConclusao para seguir o DTO e Service
+    private LocalDateTime dataFechamento;
 
     @Column(nullable = false)
     private String status; // Ex: ABERTA, EM_ANDAMENTO, CONCLUIDA, CANCELADA
@@ -37,7 +46,6 @@ public class OrdemDeServico {
     @Column(name = "valor_total", precision = 10, scale = 2)
     private BigDecimal valorTotal;
 
-    // Relacionamento com as peças utilizadas (mapeamento futuro)
     @OneToMany(mappedBy = "ordemDeServico", cascade = CascadeType.ALL)
     private List<ItemOrdemServico> itens;
 
@@ -64,9 +72,9 @@ public class OrdemDeServico {
 
     public void setDataAbertura(LocalDateTime dataAbertura) { this.dataAbertura = dataAbertura; }
 
-    public LocalDateTime getDataConclusao() { return dataConclusao; }
+    public LocalDateTime getDataFechamento() { return dataFechamento; }
 
-    public void setDataConclusao(LocalDateTime dataConclusao) { this.dataConclusao = dataConclusao; }
+    public void setDataFechamento(LocalDateTime dataFechamento) { this.dataFechamento = dataFechamento; }
 
     public String getStatus() { return status; }
 

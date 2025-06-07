@@ -24,6 +24,17 @@ public class ItemOrdemServico {
     @JoinColumn(name = "ordem_servico_id")
     private OrdemDeServico ordemDeServico;
 
+    @Column(name = "valor_total", precision = 10, scale = 2)
+    private BigDecimal valorTotal;
+
+    public BigDecimal getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
     @Column(nullable = false)
     private String descricao; // Ex: "Pneu aro 14", "Troca de óleo"
 
