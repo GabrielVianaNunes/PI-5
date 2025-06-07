@@ -1,5 +1,8 @@
 package br.com.autogyn.dto;
 
+import java.math.BigDecimal;
+
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,49 +20,41 @@ public class ItemOrdemServicoDTO {
     private Integer quantidade;
 
     @NotNull(message = "Valor unitário é obrigatório")
-    @Min(value = 0, message = "Valor unitário não pode ser negativo")
-    private Double valorUnitario;
+    @DecimalMin(value = "0.00", message = "Valor unitário não pode ser negativo")
+    private BigDecimal valorUnitario;
 
-    public ItemOrdemServicoDTO() {
-    }
+    // Apenas necessário para o tipo PECA
+    private Long pecaEstoqueId;
 
-    public ItemOrdemServicoDTO(String descricao, String tipo, Integer quantidade, Double valorUnitario) {
+    public ItemOrdemServicoDTO() {}
+
+    public ItemOrdemServicoDTO(String descricao, String tipo, Integer quantidade, BigDecimal valorUnitario, Long pecaEstoqueId) {
         this.descricao = descricao;
         this.tipo = tipo;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
+        this.pecaEstoqueId = pecaEstoqueId;
     }
 
     // Getters e Setters
-    public String getDescricao() {
-        return descricao;
-    }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+    public String getDescricao() { return descricao; }
 
-    public String getTipo() {
-        return tipo;
-    }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
+    public String getTipo() { return tipo; }
 
-    public Integer getQuantidade() {
-        return quantidade;
-    }
+    public void setTipo(String tipo) { this.tipo = tipo; }
 
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
-    }
+    public Integer getQuantidade() { return quantidade; }
 
-    public Double getValorUnitario() {
-        return valorUnitario;
-    }
+    public void setQuantidade(Integer quantidade) { this.quantidade = quantidade; }
 
-    public void setValorUnitario(Double valorUnitario) {
-        this.valorUnitario = valorUnitario;
-    }
+    public BigDecimal getValorUnitario() { return valorUnitario; }
+
+    public void setValorUnitario(BigDecimal valorUnitario) { this.valorUnitario = valorUnitario; }
+
+    public Long getPecaEstoqueId() { return pecaEstoqueId; }
+
+    public void setPecaEstoqueId(Long pecaEstoqueId) { this.pecaEstoqueId = pecaEstoqueId; }
 }

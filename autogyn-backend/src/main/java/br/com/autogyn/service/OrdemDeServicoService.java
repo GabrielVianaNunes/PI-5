@@ -10,9 +10,11 @@ import br.com.autogyn.dto.ItemOrdemServicoDTO;
 import br.com.autogyn.dto.OrdemDeServicoDTO;
 import br.com.autogyn.model.ItemOrdemServico;
 import br.com.autogyn.model.OrdemDeServico;
+import br.com.autogyn.model.PecaEstoque;
 import br.com.autogyn.model.Veiculo;
 import br.com.autogyn.repository.ItemOrdemServicoRepository;
 import br.com.autogyn.repository.OrdemDeServicoRepository;
+import br.com.autogyn.repository.PecaEstoqueRepository;
 import br.com.autogyn.repository.VeiculoRepository;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -22,14 +24,17 @@ public class OrdemDeServicoService {
     private final OrdemDeServicoRepository ordemRepository;
     private final ItemOrdemServicoRepository itemRepository;
     private final VeiculoRepository veiculoRepository;
+    private final PecaEstoqueRepository pecaEstoqueRepository;
 
     public OrdemDeServicoService(
             OrdemDeServicoRepository ordemRepository,
             ItemOrdemServicoRepository itemRepository,
-            VeiculoRepository veiculoRepository) {
+            VeiculoRepository veiculoRepository,
+            PecaEstoqueRepository pecaEstoqueRepository) {
         this.ordemRepository = ordemRepository;
         this.itemRepository = itemRepository;
         this.veiculoRepository = veiculoRepository;
+        this.pecaEstoqueRepository = pecaEstoqueRepository;
     }
 
     public List<OrdemDeServico> listarTodas() {
@@ -47,11 +52,8 @@ public class OrdemDeServicoService {
 
         OrdemDeServico ordem = new OrdemDeServico();
         ordem.setVeiculo(veiculo);
-
-        // Conversão de LocalDate → LocalDateTime
         ordem.setDataAbertura(dto.getDataAbertura().atStartOfDay());
         ordem.setDataFechamento(dto.getDataFechamento().atStartOfDay());
-
         ordem.setStatus(dto.getStatus());
 
         List<ItemOrdemServico> itens = new ArrayList<>();
@@ -62,12 +64,35 @@ public class OrdemDeServicoService {
             item.setDescricao(itemDTO.getDescricao());
             item.setTipo(itemDTO.getTipo());
             item.setQuantidade(itemDTO.getQuantidade());
-
-            BigDecimal valorUnitario = BigDecimal.valueOf(itemDTO.getValorUnitario());
-            item.setValorUnitario(valorUnitario);
             item.setOrdemDeServico(ordem);
 
-            BigDecimal subtotal = valorUnitario.multiply(BigDecimal.valueOf(item.getQuantidade()));
+            BigDecimal valorUnitario;
+
+            // Integração com o estoque
+            if ("PECA".equalsIgnoreCase(itemDTO.getTipo())) {
+                if (itemDTO.getPecaEstoqueId() == null) {
+                    throw new IllegalArgumentException("ID da peça em estoque é obrigatório para itens do tipo PECA.");
+                }
+
+                PecaEstoque peca = pecaEstoqueRepository.findById(itemDTO.getPecaEstoqueId())
+                        .orElseThrow(() -> new EntityNotFoundException("Peça não encontrada com ID: " + itemDTO.getPecaEstoqueId()));
+
+                if (peca.getQuantidade() < itemDTO.getQuantidade()) {
+                    throw new IllegalArgumentException("Estoque insuficiente para a peça: " + peca.getNome());
+                }
+
+                // Atualiza quantidade no estoque
+                peca.setQuantidade(peca.getQuantidade() - itemDTO.getQuantidade());
+                pecaEstoqueRepository.save(peca);
+
+                valorUnitario = peca.getValorUnitario();
+            } else {
+                valorUnitario = itemDTO.getValorUnitario();
+            }
+
+            item.setValorUnitario(valorUnitario);
+
+            BigDecimal subtotal = valorUnitario.multiply(BigDecimal.valueOf(item.getQuantidade().longValue()));
             item.setValorTotal(subtotal);
             valorTotal = valorTotal.add(subtotal);
 
