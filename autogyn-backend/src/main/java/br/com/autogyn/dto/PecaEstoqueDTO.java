@@ -10,16 +10,18 @@ public class PecaEstoqueDTO {
     private BigDecimal valorUnitario;
     private String codigo;
     private Integer estoqueMinimo;
+    private String descricao; // Novo campo adicionado
 
     public PecaEstoqueDTO() {}
 
-    public PecaEstoqueDTO(Long id, String nome, Integer quantidade, BigDecimal valorUnitario, String codigo, Integer estoqueMinimo) {
+    public PecaEstoqueDTO(Long id, String nome, Integer quantidade, BigDecimal valorUnitario, String codigo, Integer estoqueMinimo, String descricao) {
         this.id = id;
         this.nome = nome;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
         this.codigo = codigo;
         this.estoqueMinimo = estoqueMinimo;
+        this.descricao = descricao;
     }
 
     // Getters e Setters
@@ -47,4 +49,8 @@ public class PecaEstoqueDTO {
     public Integer getEstoqueMinimo() { return estoqueMinimo; }
 
     public void setEstoqueMinimo(Integer estoqueMinimo) { this.estoqueMinimo = estoqueMinimo; }
+
+    public String getDescricao() { return descricao; }
+
+    public void setDescricao(String descricao) { this.descricao = descricao; }
 }
