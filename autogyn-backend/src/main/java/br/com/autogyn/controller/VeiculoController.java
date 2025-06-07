@@ -2,7 +2,6 @@ package br.com.autogyn.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +24,6 @@ public class VeiculoController {
 
     private final VeiculoService veiculoService;
 
-    @Autowired
     public VeiculoController(VeiculoService veiculoService) {
         this.veiculoService = veiculoService;
     }

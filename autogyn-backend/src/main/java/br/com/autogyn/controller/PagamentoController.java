@@ -12,40 +12,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.autogyn.dto.OrdemDeServicoDTO;
-import br.com.autogyn.model.OrdemDeServico;
-import br.com.autogyn.service.OrdemDeServicoService;
+import br.com.autogyn.dto.PagamentoDTO;
+import br.com.autogyn.model.Pagamento;
+import br.com.autogyn.service.PagamentoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/ordens-servico")
+@RequestMapping("/api/pagamentos")
 @CrossOrigin(origins = "*")
-public class OrdemDeServicoController {
+public class PagamentoController {
 
-    private final OrdemDeServicoService ordemService;
+    private final PagamentoService pagamentoService;
 
-    public OrdemDeServicoController(OrdemDeServicoService ordemService) {
-        this.ordemService = ordemService;
+    public PagamentoController(PagamentoService pagamentoService) {
+        this.pagamentoService = pagamentoService;
     }
 
     @GetMapping
-    public ResponseEntity<List<OrdemDeServico>> listarTodas() {
-        return ResponseEntity.ok(ordemService.listarTodas());
+    public ResponseEntity<List<Pagamento>> listarTodos() {
+        return ResponseEntity.ok(pagamentoService.listarTodos());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrdemDeServico> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(ordemService.buscarPorId(id));
+    public ResponseEntity<Pagamento> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(pagamentoService.buscarPorId(id));
     }
 
     @PostMapping
-    public ResponseEntity<OrdemDeServico> criar(@Valid @RequestBody OrdemDeServicoDTO dto) {
-        return ResponseEntity.ok(ordemService.criar(dto));
+    public ResponseEntity<Pagamento> registrarPagamento(@Valid @RequestBody PagamentoDTO dto) {
+        return ResponseEntity.ok(pagamentoService.registrarPagamento(dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        ordemService.deletar(id);
+        pagamentoService.deletar(id);
         return ResponseEntity.noContent().build();
     }
 }
