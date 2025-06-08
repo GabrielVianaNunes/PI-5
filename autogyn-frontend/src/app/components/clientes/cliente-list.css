@@ -1,0 +1,17 @@
+.cliente-list-container {
+  padding: 2rem;
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.botao-adicionar {
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+.p-button {
+  margin-right: 0.5rem;
+}

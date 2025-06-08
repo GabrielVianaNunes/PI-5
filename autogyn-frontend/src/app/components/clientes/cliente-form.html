@@ -1,1 +1,33 @@
-<p>cliente-form works!</p>
+<div class="form-container">
+  <h2>{{ clienteForm.value.id ? 'Editar Cliente' : 'Novo Cliente' }}</h2>
+
+  <form [formGroup]="clienteForm" (ngSubmit)="salvar()">
+    <div class="p-field">
+      <label for="nome">Nome</label>
+      <input id="nome" type="text" pInputText formControlName="nome" />
+    </div>
+
+    <div class="p-field">
+      <label for="telefone">Telefone</label>
+      <input id="telefone" type="text" pInputText formControlName="telefone" />
+    </div>
+
+    <div class="p-field">
+      <label for="email">Email</label>
+      <input id="email" type="email" pInputText formControlName="email" />
+    </div>
+
+    <div class="p-field">
+      <label for="cpf">CPF</label>
+      <input id="cpf" type="text" pInputText formControlName="cpf" />
+    </div>
+
+    <div class="p-field">
+      <label for="endereco">Endereço</label>
+      <input id="endereco" type="text" pInputText formControlName="endereco" />
+    </div>
+
+    <button pButton type="submit" label="Salvar" [disabled]="clienteForm.invalid"></button>
+    <button pButton type="button" label="Cancelar" class="p-button-secondary" (click)="cancelar()"></button>
+  </form>
+</div>
