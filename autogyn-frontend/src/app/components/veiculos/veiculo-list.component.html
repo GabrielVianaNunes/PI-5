@@ -1,0 +1,33 @@
+<h2>Lista de Veículos</h2>
+
+<p-table [value]="veiculos" [paginator]="true" [rows]="10" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Placa</th>
+      <th>Marca</th>
+      <th>Modelo</th>
+      <th>Ano</th>
+      <th>Tipo</th>
+      <th>Dono</th>
+      <th>Ações</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-veiculo>
+    <tr>
+      <td>{{ veiculo.id }}</td>
+      <td>{{ veiculo.placa }}</td>
+      <td>{{ veiculo.marca }}</td>
+      <td>{{ veiculo.modelo }}</td>
+      <td>{{ veiculo.ano }}</td>
+      <td>{{ veiculo.tipo }}</td>
+      <td>{{ veiculo.cliente?.nome }}</td>
+      <td>
+        <button pButton type="button" icon="pi pi-pencil" class="p-button-sm p-mr-2" [routerLink]="['/veiculos/editar', veiculo.id]"></button>
+        <button pButton type="button" icon="pi pi-trash" class="p-button-sm p-button-danger" (click)="excluir(veiculo.id)"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<button pButton type="button" label="Novo Veículo" icon="pi pi-plus" [routerLink]="['/veiculos/novo']" class="p-mt-3"></button>

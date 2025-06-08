@@ -1,0 +1,13 @@
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.p-field {
+  margin-bottom: 1rem;
+}
+
+button {
+  width: 100%;
+}

@@ -1,0 +1,42 @@
+<!-- src/app/components/veiculos/veiculo-form.component.html -->
+
+<form [formGroup]="veiculoForm" (ngSubmit)="onSubmit()" class="p-fluid">
+
+  <div class="p-field">
+    <label for="placa">Placa</label>
+    <input id="placa" type="text" pInputText formControlName="placa" />
+  </div>
+
+  <div class="p-field">
+    <label for="marca">Marca</label>
+    <input id="marca" type="text" pInputText formControlName="marca" />
+  </div>
+
+  <div class="p-field">
+    <label for="modelo">Modelo</label>
+    <input id="modelo" type="text" pInputText formControlName="modelo" />
+  </div>
+
+  <div class="p-field">
+    <label for="ano">Ano</label>
+    <input id="ano" type="number" pInputText formControlName="ano" />
+  </div>
+
+  <div class="p-field">
+    <label for="tipo">Tipo</label>
+    <input id="tipo" type="text" pInputText formControlName="tipo" />
+  </div>
+
+  <div class="p-field">
+    <label for="clienteId">Cliente</label>
+    <p-dropdown 
+      [options]="clientes" 
+      optionLabel="nome" 
+      optionValue="id"
+      formControlName="clienteId"
+      placeholder="Selecione um cliente">
+    </p-dropdown>
+  </div>
+
+  <button pButton type="submit" label="Salvar Veículo"></button>
+</form>
