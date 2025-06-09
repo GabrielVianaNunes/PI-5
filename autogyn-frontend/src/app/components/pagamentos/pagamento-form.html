@@ -1,1 +1,53 @@
-<p>pagamento-form works!</p>
+<!-- src/app/components/pagamentos/pagamento-form.html -->
+
+<div class="card">
+  <h2>Registrar Pagamento</h2>
+
+  <form [formGroup]="pagamentoForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="ordemDeServicoId">Ordem de Serviço</label>
+      <input
+        type="number"
+        id="ordemDeServicoId"
+        formControlName="ordemDeServicoId"
+        pInputText
+        placeholder="ID da OS"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="valorPago">Valor Pago</label>
+      <p-inputNumber
+        inputId="valorPago"
+        formControlName="valorPago"
+        mode="currency"
+        currency="BRL"
+        locale="pt-BR"
+      ></p-inputNumber>
+    </div>
+
+    <div class="form-group">
+      <label for="formaPagamento">Forma de Pagamento</label>
+      <p-dropdown
+        inputId="formaPagamento"
+        formControlName="formaPagamento"
+        [options]="formasPagamento"
+        placeholder="Selecione"
+        [autoDisplayFirst]="false"
+      ></p-dropdown>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status</label>
+      <p-dropdown
+        inputId="status"
+        formControlName="status"
+        [options]="statusPagamento"
+        placeholder="Selecione"
+        [autoDisplayFirst]="false"
+      ></p-dropdown>
+    </div>
+
+    <button type="submit" pButton label="Registrar" [disabled]="pagamentoForm.invalid"></button>
+  </form>
+</div>
