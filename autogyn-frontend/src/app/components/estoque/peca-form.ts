@@ -1,11 +1,55 @@
-import { Component } from '@angular/core';
+// src/app/components/estoque/peca-form.ts
+
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { PecaService } from 'src/app/services/peca.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { Router } from '@angular/router';
+
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-peca-form',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    InputNumberModule,
+    ButtonModule
+  ],
   templateUrl: './peca-form.html',
-  styleUrl: './peca-form.css'
+  styleUrls: ['./peca-form.css']
 })
-export class PecaForm {
+export class PecaFormComponent {
+  private fb = inject(FormBuilder);
+  private pecaService = inject(PecaService);
+  private toast = inject(ToastService);
+  private router = inject(Router);
 
+  pecaForm: FormGroup = this.fb.group({
+    nome: ['', Validators.required],
+    codigo: ['', Validators.required],
+    descricao: [''],
+    quantidade: [0, [Validators.required, Validators.min(0)]],
+    valorUnitario: [0, [Validators.required, Validators.min(0)]],
+    estoqueMinimo: [0, [Validators.min(0)]]
+  });
+
+  onSubmit() {
+    if (this.pecaForm.valid) {
+      this.pecaService.create(this.pecaForm.value).subscribe({
+        next: () => {
+          this.toast.sucesso('Peça cadastrada com sucesso');
+          this.router.navigate(['/estoque']);
+        },
+        error: () => this.toast.erro('Erro ao cadastrar peça')
+      });
+    } else {
+      this.toast.aviso('Preencha todos os campos obrigatórios');
+    }
+  }
 }

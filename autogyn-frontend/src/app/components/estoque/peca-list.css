@@ -1,0 +1,22 @@
+/* src/app/components/estoque/peca-list.css */
+
+.card {
+  margin: 2rem;
+  padding: 2rem;
+  border-radius: 12px;
+  background: #f4faff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+:host ::ng-deep .p-button {
+  margin-right: 0.5rem;
+}
+
+:host ::ng-deep .p-table th {
+  background-color: #d0eaff;
+  color: #003366;
+}
+
+:host ::ng-deep .p-table tr:nth-child(even) {
+  background-color: #f9fcff;
+}

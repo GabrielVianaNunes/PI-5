@@ -1,0 +1,15 @@
+/* src/app/components/estoque/peca-form.css */
+
+form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.p-field {
+  margin-bottom: 1rem;
+}
+
+button {
+  width: 100%;
+}
