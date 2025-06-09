@@ -1,1 +1,29 @@
-<p>ordem-form works!</p>
+<form [formGroup]="ordemForm" (ngSubmit)="onSubmit()" class="p-fluid">
+  <div class="p-field">
+    <label for="veiculoId">Veículo</label>
+    <p-dropdown
+      [options]="veiculos"
+      optionLabel="modelo"
+      optionValue="id"
+      formControlName="veiculoId"
+      placeholder="Selecione o veículo"
+    ></p-dropdown>
+  </div>
+
+  <div class="p-field">
+    <label for="dataAbertura">Data de Abertura</label>
+    <p-calendar formControlName="dataAbertura" dateFormat="dd/mm/yy" showIcon></p-calendar>
+  </div>
+
+  <div class="p-field">
+    <label for="dataFechamento">Data de Fechamento</label>
+    <p-calendar formControlName="dataFechamento" dateFormat="dd/mm/yy" showIcon></p-calendar>
+  </div>
+
+  <div class="p-field">
+    <label for="status">Status</label>
+    <input id="status" type="text" pInputText formControlName="status" />
+  </div>
+
+  <button pButton type="submit" label="Salvar Ordem de Serviço"></button>
+</form>

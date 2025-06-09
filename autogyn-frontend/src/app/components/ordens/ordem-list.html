@@ -1,1 +1,35 @@
-<p>ordem-list works!</p>
+<!-- src/app/components/ordens/ordem-list.component.html -->
+
+<div class="container">
+  <h2>Ordens de Serviço</h2>
+
+  <button pButton type="button" label="Nova Ordem" routerLink="/ordens/novo" class="p-button-success mb-3"></button>
+
+  <p-table [value]="ordens" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Data Abertura</th>
+        <th>Status</th>
+        <th>Cliente</th>
+        <th>Veículo</th>
+        <th>Ações</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-ordem>
+      <tr>
+        <td>{{ ordem.id }}</td>
+        <td>{{ ordem.dataAbertura | date: 'shortDate' }}</td>
+        <td>{{ ordem.status }}</td>
+        <td>{{ ordem.cliente?.nome }}</td>
+        <td>{{ ordem.veiculo?.placa }}</td>
+        <td>
+          <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2"
+                  [routerLink]="['/ordens', ordem.id]"></button>
+          <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                  (click)="excluir(ordem.id)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
