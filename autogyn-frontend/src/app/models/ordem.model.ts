@@ -3,9 +3,9 @@
 export interface ItemOrdemServico {
   descricao: string;
   quantidade: number;
-  precoUnitario: number;
+  valorUnitario: number;          // Renomeado para coincidir com o backend
   tipoItem: 'PECA' | 'SERVICO';
-  pecaEstoqueId?: number; // só se for tipo PECA
+  pecaEstoqueId?: number;         // Apenas se tipoItem for 'PECA'
 }
 
 export interface OrdemServico {
@@ -17,4 +17,5 @@ export interface OrdemServico {
   status: 'ABERTA' | 'EM_ANDAMENTO' | 'FINALIZADA' | 'CANCELADA';
   itens: ItemOrdemServico[];
   observacoes?: string;
+  valorTotal?: number;            // Útil para exibição ou conferência
 }
