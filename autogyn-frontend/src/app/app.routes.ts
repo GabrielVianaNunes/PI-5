@@ -16,7 +16,13 @@ import { PecaListComponent } from './components/estoque/peca-list';
 import { PagamentoFormComponent } from './components/pagamentos/pagamento-form';
 import { PagamentoListComponent } from './components/pagamentos/pagamento-list';
 
+import { HomeComponent } from './components/home/home.component';
+
 export const appRoutes: Routes = [
+  // Página inicial
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+
   // Clientes
   { path: 'clientes', component: ClienteListComponent },
   { path: 'clientes/novo', component: ClienteFormComponent },
@@ -42,7 +48,6 @@ export const appRoutes: Routes = [
   { path: 'pagamentos/novo', component: PagamentoFormComponent },
   { path: 'pagamentos/editar/:id', component: PagamentoFormComponent },
 
-  // Página inicial (opcional)
-  { path: '', redirectTo: 'clientes', pathMatch: 'full' },
-  { path: '**', redirectTo: 'clientes' }
+  // Fallback
+  { path: '**', redirectTo: 'home' }
 ];
