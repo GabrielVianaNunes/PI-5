@@ -2,9 +2,8 @@
 
 import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { appRoutes } from './app.routes'; // ✅ corrigido
+import { appRoutes } from './app.routes';
 
-// Outros imports mantidos
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,11 +16,13 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { ToastModule } from 'primeng/toast';
 
+import { MessageService } from 'primeng/api'; // ✅ Importar
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(appRoutes), // ✅ corrigido aqui também
+    provideRouter(appRoutes),
     importProvidersFrom(
       BrowserAnimationsModule,
       HttpClientModule,
@@ -33,6 +34,7 @@ export const appConfig: ApplicationConfig = {
       DropdownModule,
       CalendarModule,
       ToastModule
-    )
+    ),
+    MessageService // ✅ Adicionado aqui
   ]
 };
