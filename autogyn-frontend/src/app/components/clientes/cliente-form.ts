@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ClienteService } from 'src/app/services/cliente.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
@@ -13,71 +13,145 @@ import { InputTextModule } from 'primeng/inputtext';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule, ToastModule],
   providers: [MessageService],
-  template: `
-    <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()" class="p-fluid">
-      <div class="p-field">
-        <label for="nome">Nome</label>
-        <input id="nome" type="text" pInputText formControlName="nome" />
-      </div>
-
-      <div class="p-field">
-        <label for="tipoCliente">Tipo</label>
-        <input id="tipoCliente" type="text" pInputText formControlName="tipoCliente" />
-      </div>
-
-      <div class="p-field">
-        <label for="documento">Documento</label>
-        <input id="documento" type="text" pInputText formControlName="documento" />
-      </div>
-
-      <div class="p-field">
-        <label for="telefone">Telefone</label>
-        <input id="telefone" type="text" pInputText formControlName="telefone" />
-      </div>
-
-      <div class="p-field">
-        <label for="email">Email</label>
-        <input id="email" type="email" pInputText formControlName="email" />
-      </div>
-
-      <div class="p-field">
-        <label for="endereco">Endereço</label>
-        <input id="endereco" type="text" pInputText formControlName="endereco" />
-      </div>
-
-      <button pButton type="submit" label="Salvar"></button>
-    </form>
-  `,
-  styles: [``]
+  templateUrl: './cliente-form.html',
+  styleUrls: ['./cliente-form.css']
 })
-export class ClienteFormComponent {
+export class ClienteFormComponent implements OnInit {
   private fb = inject(FormBuilder);
-  private clienteService: ClienteService = inject(ClienteService);
+  private clienteService = inject(ClienteService);
   private messageService = inject(MessageService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
+  clienteId: number | null = null;
 
   clienteForm: FormGroup = this.fb.group({
-    nome: ['', Validators.required],
+    nome: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$') // Apenas letras e espaços
+      ]
+    ],
     tipoCliente: ['', Validators.required],
-    documento: ['', Validators.required],
-    telefone: ['', Validators.required],
+    documento: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^\d{11}$|^\d{14}$/) // CPF (11) ou CNPJ (14)
+      ]
+    ],
+    telefone: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^\d{11}$/) // Apenas números, 11 dígitos
+      ]
+    ],
     email: ['', [Validators.required, Validators.email]],
     endereco: ['', Validators.required]
   });
 
-  onSubmit() {
+  ngOnInit(): void {
+    this.clienteId = Number(this.route.snapshot.paramMap.get('id'));
+    if (this.clienteId) {
+      this.clienteService.getById(this.clienteId).subscribe((cliente) => {
+        this.clienteForm.patchValue(cliente);
+      });
+    }
+  }
+
+  salvar() {
     if (this.clienteForm.valid) {
-      this.clienteService.create(this.clienteForm.value).subscribe({
+      const acao = this.clienteId
+        ? this.clienteService.update(this.clienteId, this.clienteForm.value)
+        : this.clienteService.create(this.clienteForm.value);
+
+      acao.subscribe({
         next: () => {
-          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Cliente cadastrado com sucesso!' });
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: `Cliente ${this.clienteId ? 'atualizado' : 'cadastrado'} com sucesso!`
+          });
           this.router.navigate(['/clientes']);
         },
         error: () => {
-          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao cadastrar cliente' });
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: `Erro ao ${this.clienteId ? 'atualizar' : 'cadastrar'} cliente`
+          });
         }
       });
     } else {
-      this.messageService.add({ severity: 'warn', summary: 'Atenção', detail: 'Preencha todos os campos obrigatórios' });
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Atenção',
+        detail: 'Preencha todos os campos obrigatórios corretamente.'
+      });
+      this.clienteForm.markAllAsTouched();
     }
   }
+
+  cancelar() {
+    this.router.navigate(['/clientes']);
+  }
+
+  isInvalid(campo: string): boolean {
+    const control = this.clienteForm.get(campo);
+    return control ? control.invalid && control.touched : false;
+  }
+
+  permitirSomenteNumeros(event: KeyboardEvent) {
+    const tecla = event.key;
+    if (!/^\d$/.test(tecla)) {
+      event.preventDefault();
+    }
+  }
+
+  voltarInicio() {
+    this.router.navigate(['/']);
+  }
+
+  formatarTelefone(event: Event) {
+    const input = event.target as HTMLInputElement;
+    let valor = input.value.replace(/\D/g, '');
+
+    if (valor.length > 11) {
+      valor = valor.slice(0, 11);
+    }
+
+    if (valor.length > 6) {
+      input.value = `(${valor.slice(0, 2)}) ${valor.slice(2, 7)}-${valor.slice(7)}`;
+    } else if (valor.length > 2) {
+      input.value = `(${valor.slice(0, 2)}) ${valor.slice(2)}`;
+    } else if (valor.length > 0) {
+      input.value = `(${valor}`;
+    }
+
+    this.clienteForm.get('telefone')?.setValue(input.value.replace(/\D/g, ''));
+  }
+
+  formatarDocumento(event: Event) {
+    const input = event.target as HTMLInputElement;
+    let valor = input.value.replace(/\D/g, '');
+
+    if (valor.length > 11) {
+      valor = valor.slice(0, 11);
+    }
+
+    if (valor.length > 9) {
+      input.value = `${valor.slice(0, 3)}.${valor.slice(3, 6)}.${valor.slice(6, 9)}-${valor.slice(9)}`;
+    } else if (valor.length > 6) {
+      input.value = `${valor.slice(0, 3)}.${valor.slice(3, 6)}.${valor.slice(6)}`;
+    } else if (valor.length > 3) {
+      input.value = `${valor.slice(0, 3)}.${valor.slice(3)}`;
+    } else {
+      input.value = valor;
+    }
+
+    this.clienteForm.get('documento')?.setValue(valor);
+  }
+
 }

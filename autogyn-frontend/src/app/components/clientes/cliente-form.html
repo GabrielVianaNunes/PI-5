@@ -1,33 +1,94 @@
 <div class="form-container">
-  <h2>{{ clienteForm.value.id ? 'Editar Cliente' : 'Novo Cliente' }}</h2>
+  <h2>{{ clienteId ? 'Editar Cliente' : 'Novo Cliente' }}</h2>
 
-  <form [formGroup]="clienteForm" (ngSubmit)="salvar()">
-    <div class="p-field">
+  <form [formGroup]="clienteForm" (ngSubmit)="salvar()" class="p-fluid">
+
+    <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('nome') }">
       <label for="nome">Nome</label>
-      <input id="nome" type="text" pInputText formControlName="nome" />
+      <input id="nome" type="text" pInputText formControlName="nome" placeholder="Digite o nome completo" />
+      <div class="campo-erro" *ngIf="isInvalid('nome')">
+        O nome deve conter apenas letras.
+      </div>
     </div>
 
-    <div class="p-field">
+    <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('telefone') }">
       <label for="telefone">Telefone</label>
-      <input id="telefone" type="text" pInputText formControlName="telefone" />
+      <input
+        id="telefone"
+        type="text"
+        maxlength="15"
+        pInputText
+        inputmode="numeric"
+        formControlName="telefone"
+        placeholder="(DDD) 99999-9999"
+        (input)="formatarTelefone($event)"
+        (keypress)="permitirSomenteNumeros($event)"
+      />
+      <div class="campo-erro" *ngIf="isInvalid('telefone')">
+        Telefone deve conter exatamente 11 dígitos (incluindo DDD).
+      </div>
     </div>
 
-    <div class="p-field">
-      <label for="email">Email</label>
-      <input id="email" type="email" pInputText formControlName="email" />
+    <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('email') }">
+      <label for="email">E-mail</label>
+      <input id="email" type="email" pInputText formControlName="email" placeholder="exemplo@email.com" />
+      <div class="campo-erro" *ngIf="isInvalid('email')">
+        Insira um e-mail válido.
+      </div>
     </div>
 
-    <div class="p-field">
-      <label for="cpf">CPF</label>
-      <input id="cpf" type="text" pInputText formControlName="cpf" />
+    <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('documento') }">
+      <label for="documento">CPF ou CNPJ</label>
+      <input
+        id="documento"
+        type="text"
+        maxlength="18"
+        pInputText
+        inputmode="numeric"
+        formControlName="documento"
+        placeholder="CPF ou CNPJ"
+        (input)="formatarDocumento($event)"
+        (keypress)="permitirSomenteNumeros($event)"
+      />
+      <div class="campo-erro" *ngIf="isInvalid('documento')">
+        CPF (11) devem conter somente números.
+      </div>
     </div>
 
-    <div class="p-field">
+    <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('endereco') }">
       <label for="endereco">Endereço</label>
-      <input id="endereco" type="text" pInputText formControlName="endereco" />
+      <input id="endereco" type="text" pInputText formControlName="endereco" placeholder="Rua, número, bairro, cidade" />
+      <div class="campo-erro" *ngIf="isInvalid('endereco')">
+        Endereço é obrigatório.
+      </div>
     </div>
 
-    <button pButton type="submit" label="Salvar" [disabled]="clienteForm.invalid"></button>
-    <button pButton type="button" label="Cancelar" class="p-button-secondary" (click)="cancelar()"></button>
+    <div class="form-buttons">
+      <button
+        pButton
+        type="submit"
+        label="Salvar"
+        icon="pi pi-check"
+        [disabled]="clienteForm.invalid"
+        class="p-button-success"
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button-secondary"
+        (click)="cancelar()"
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Início"
+        icon="pi pi-home"
+        class="p-button-warning"
+        (click)="voltarInicio()"
+      ></button>
+    </div>
+
   </form>
 </div>
