@@ -25,11 +25,18 @@ label {
   margin-bottom: 0.5rem;
 }
 
-input {
+input,
+.p-dropdown {
+  margin-bottom: 0.7rem !important;
+  width: 100%;
   padding: 0.6rem 0.8rem;
   border-radius: 6px;
   border: 1px solid #dcdcdc;
   font-size: 0.95rem;
+}
+
+.p-dropdown-label {
+  padding: 0.6rem 0.8rem;
 }
 
 input:focus {
@@ -39,9 +46,16 @@ input:focus {
   transition: all 0.2s ease;
 }
 
-.invalid-field input {
+.invalid-field input,
+.invalid-field .p-dropdown {
   border-color: #e74c3c !important;
   background-color: #fff6f6;
+}
+
+.campo-erro {
+  font-size: 0.8rem;
+  color: #e74c3c;
+  margin-top: 0.25rem;
 }
 
 .form-buttons {
@@ -62,7 +76,6 @@ input:focus {
   transition: all 0.2s ease-in-out;
 }
 
-/* Botão Salvar - Verde */
 .p-button-success {
   background-color: #28a745;
   border: none;
@@ -73,7 +86,6 @@ input:focus {
   transform: translateY(-1px);
 }
 
-/* Botão Cancelar - Cinza escuro */
 .p-button-secondary {
   background-color: #6c757d;
   border: none;
@@ -81,5 +93,16 @@ input:focus {
 
 .p-button-secondary:hover {
   background-color: #5a6268;
+  transform: translateY(-1px);
+}
+
+.p-button-warning {
+  background-color: #ffc107;
+  border: none;
+  color: #212529;
+}
+
+.p-button-warning:hover {
+  background-color: #e0a800;
   transform: translateY(-1px);
 }

@@ -7,11 +7,19 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-cliente-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule, ToastModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    ButtonModule,
+    ToastModule,
+    DropdownModule
+  ],
   providers: [MessageService],
   templateUrl: './cliente-form.html',
   styleUrls: ['./cliente-form.css']
@@ -25,28 +33,21 @@ export class ClienteFormComponent implements OnInit {
 
   clienteId: number | null = null;
 
+  tiposCliente = [
+    { label: 'Pessoa Física', value: 'FISICA' },
+    { label: 'Pessoa Jurídica', value: 'JURIDICA' }
+  ];
+
   clienteForm: FormGroup = this.fb.group({
     nome: [
       '',
-      [
-        Validators.required,
-        Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$') // Apenas letras e espaços
-      ]
+      [Validators.required, Validators.pattern("^[A-Za-zÀ-ú\\s]+$")]
     ],
     tipoCliente: ['', Validators.required],
-    documento: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(/^\d{11}$|^\d{14}$/) // CPF (11) ou CNPJ (14)
-      ]
-    ],
+    documento: ['', Validators.required],
     telefone: [
       '',
-      [
-        Validators.required,
-        Validators.pattern(/^\d{11}$/) // Apenas números, 11 dígitos
-      ]
+      [Validators.required, Validators.pattern(/^[0-9]{11}$/)]
     ],
     email: ['', [Validators.required, Validators.email]],
     endereco: ['', Validators.required]
@@ -59,6 +60,16 @@ export class ClienteFormComponent implements OnInit {
         this.clienteForm.patchValue(cliente);
       });
     }
+
+    this.clienteForm.get('tipoCliente')?.valueChanges.subscribe(tipo => {
+      const docCtrl = this.clienteForm.get('documento');
+      if (tipo === 'FISICA') {
+        docCtrl?.setValidators([Validators.required, Validators.pattern(/^\d{11}$/)]);
+      } else {
+        docCtrl?.setValidators([Validators.required, Validators.pattern(/^\d{14}$/)]);
+      }
+      docCtrl?.updateValueAndValidity();
+    });
   }
 
   salvar() {
@@ -98,6 +109,10 @@ export class ClienteFormComponent implements OnInit {
     this.router.navigate(['/clientes']);
   }
 
+  voltarInicio() {
+    this.router.navigate(['/']);
+  }
+
   isInvalid(campo: string): boolean {
     const control = this.clienteForm.get(campo);
     return control ? control.invalid && control.touched : false;
@@ -105,53 +120,84 @@ export class ClienteFormComponent implements OnInit {
 
   permitirSomenteNumeros(event: KeyboardEvent) {
     const tecla = event.key;
-    if (!/^\d$/.test(tecla)) {
+    if (!/^[0-9]$/.test(tecla)) {
       event.preventDefault();
     }
-  }
-
-  voltarInicio() {
-    this.router.navigate(['/']);
   }
 
   formatarTelefone(event: Event) {
     const input = event.target as HTMLInputElement;
     let valor = input.value.replace(/\D/g, '');
 
-    if (valor.length > 11) {
-      valor = valor.slice(0, 11);
-    }
+    if (valor.length > 11) valor = valor.slice(0, 11);
 
+    let formatado = '';
     if (valor.length > 6) {
-      input.value = `(${valor.slice(0, 2)}) ${valor.slice(2, 7)}-${valor.slice(7)}`;
+      formatado = `(${valor.slice(0, 2)}) ${valor.slice(2, 7)}-${valor.slice(7)}`;
     } else if (valor.length > 2) {
-      input.value = `(${valor.slice(0, 2)}) ${valor.slice(2)}`;
+      formatado = `(${valor.slice(0, 2)}) ${valor.slice(2)}`;
     } else if (valor.length > 0) {
-      input.value = `(${valor}`;
+      formatado = `(${valor}`;
     }
 
-    this.clienteForm.get('telefone')?.setValue(input.value.replace(/\D/g, ''));
+    input.value = formatado;
+    this.clienteForm.get('telefone')?.setValue(valor);
   }
 
   formatarDocumento(event: Event) {
     const input = event.target as HTMLInputElement;
     let valor = input.value.replace(/\D/g, '');
 
-    if (valor.length > 11) {
-      valor = valor.slice(0, 11);
-    }
+    const tipo = this.clienteForm.get('tipoCliente')?.value;
+    let formatado = '';
 
-    if (valor.length > 9) {
-      input.value = `${valor.slice(0, 3)}.${valor.slice(3, 6)}.${valor.slice(6, 9)}-${valor.slice(9)}`;
-    } else if (valor.length > 6) {
-      input.value = `${valor.slice(0, 3)}.${valor.slice(3, 6)}.${valor.slice(6)}`;
-    } else if (valor.length > 3) {
-      input.value = `${valor.slice(0, 3)}.${valor.slice(3)}`;
+    if (tipo === 'FISICA') {
+      if (valor.length > 11) valor = valor.slice(0, 11);
+      if (valor.length > 9) {
+        formatado = `${valor.slice(0, 3)}.${valor.slice(3, 6)}.${valor.slice(6, 9)}-${valor.slice(9)}`;
+      } else if (valor.length > 6) {
+        formatado = `${valor.slice(0, 3)}.${valor.slice(3, 6)}.${valor.slice(6)}`;
+      } else if (valor.length > 3) {
+        formatado = `${valor.slice(0, 3)}.${valor.slice(3)}`;
+      } else {
+        formatado = valor;
+      }
     } else {
-      input.value = valor;
+      if (valor.length > 14) valor = valor.slice(0, 14);
+      if (valor.length > 12) {
+        formatado = `${valor.slice(0, 2)}.${valor.slice(2, 5)}.${valor.slice(5, 8)}/${valor.slice(8, 12)}-${valor.slice(12)}`;
+      } else if (valor.length > 8) {
+        formatado = `${valor.slice(0, 2)}.${valor.slice(2, 5)}.${valor.slice(5, 8)}/${valor.slice(8)}`;
+      } else if (valor.length > 5) {
+        formatado = `${valor.slice(0, 2)}.${valor.slice(2, 5)}.${valor.slice(5)}`;
+      } else if (valor.length > 2) {
+        formatado = `${valor.slice(0, 2)}.${valor.slice(2)}`;
+      } else {
+        formatado = valor;
+      }
     }
 
+    input.value = formatado;
     this.clienteForm.get('documento')?.setValue(valor);
+  }
+
+  atualizarValidacaoDocumento() {
+    const tipo = this.clienteForm.get('tipoCliente')?.value;
+    const documentoControl = this.clienteForm.get('documento');
+
+    if (tipo === 'JURIDICA') {
+      documentoControl?.setValidators([
+        Validators.required,
+        Validators.pattern(/^\d{14}$/) // CNPJ: 14 dígitos numéricos
+      ]);
+    } else {
+      documentoControl?.setValidators([
+        Validators.required,
+        Validators.pattern(/^\d{11}$/) // CPF: 11 dígitos numéricos
+      ]);
+    }
+
+    documentoControl?.updateValueAndValidity();
   }
 
 }

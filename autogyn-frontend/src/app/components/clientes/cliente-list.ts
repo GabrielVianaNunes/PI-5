@@ -32,7 +32,8 @@ export class ClienteListComponent {
     });
   }
 
-  excluir(id: number) {
+  excluir(id?: number) {
+    if (id == null) return; // ou lançar erro
     if (confirm('Tem certeza que deseja excluir este cliente?')) {
       this.clienteService.delete(id).subscribe({
         next: () => {
@@ -43,4 +44,5 @@ export class ClienteListComponent {
       });
     }
   }
+
 }

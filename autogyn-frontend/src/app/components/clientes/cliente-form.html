@@ -11,6 +11,22 @@
       </div>
     </div>
 
+    <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('tipoCliente') }">
+      <label for="tipoCliente">Tipo de Cliente</label>
+      <p-dropdown
+        id="tipoCliente"
+        [options]="tiposCliente"
+        optionLabel="label"
+        optionValue="value"
+        formControlName="tipoCliente"
+        placeholder="Selecione o tipo"
+        (onChange)="atualizarValidacaoDocumento()"
+      ></p-dropdown>
+      <div class="campo-erro" *ngIf="isInvalid('tipoCliente')">
+        Tipo de cliente é obrigatório.
+      </div>
+    </div>
+
     <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('telefone') }">
       <label for="telefone">Telefone</label>
       <input
@@ -38,20 +54,22 @@
     </div>
 
     <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('documento') }">
-      <label for="documento">CPF ou CNPJ</label>
+      <label for="documento">{{ clienteForm.get('tipoCliente')?.value === 'JURIDICA' ? 'CNPJ' : 'CPF' }}</label>
       <input
         id="documento"
         type="text"
-        maxlength="18"
+        [maxlength]="clienteForm.get('tipoCliente')?.value === 'JURIDICA' ? 18 : 14"
         pInputText
         inputmode="numeric"
         formControlName="documento"
-        placeholder="CPF ou CNPJ"
+        [placeholder]="clienteForm.get('tipoCliente')?.value === 'JURIDICA' ? '00.000.000/0000-00' : '000.000.000-00'"
         (input)="formatarDocumento($event)"
         (keypress)="permitirSomenteNumeros($event)"
       />
       <div class="campo-erro" *ngIf="isInvalid('documento')">
-        CPF (11) devem conter somente números.
+        {{ clienteForm.get('tipoCliente')?.value === 'JURIDICA'
+          ? 'CNPJ deve conter 14 dígitos numéricos.'
+          : 'CPF deve conter 11 dígitos numéricos.' }}
       </div>
     </div>
 
@@ -89,6 +107,5 @@
         (click)="voltarInicio()"
       ></button>
     </div>
-
   </form>
 </div>
