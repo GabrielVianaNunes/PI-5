@@ -1,4 +1,7 @@
-// src/app/models/veiculo.model.ts
+export interface Cliente {
+  id: number;
+  nome: string;
+}
 
 export interface Veiculo {
   id?: number;
@@ -8,4 +11,5 @@ export interface Veiculo {
   ano: number;
   tipo: string;
   clienteId: number;
+  cliente?: Cliente; 
 }

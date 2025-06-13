@@ -36,12 +36,49 @@ export class VeiculoFormComponent {
   private messageService = inject(MessageService);
   private router = inject(Router);
 
+  isInvalid(campo: string): boolean {
+    const control = this.veiculoForm.get(campo);
+    return !!(control && control.invalid && (control.dirty || control.touched));
+  }
+
+
   veiculoForm: FormGroup = this.fb.group({
-    placa: ['', Validators.required],
-    marca: ['', Validators.required],
-    modelo: ['', Validators.required],
-    ano: ['', [Validators.required, Validators.pattern('^[0-9]{4}$')]],
-    tipo: ['', Validators.required],
+    placa: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/) // Ex: ABC1D23
+      ]
+    ],
+    marca: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^[A-Za-zÀ-ÿ\s]+$/) // Apenas letras e acentos
+      ]
+    ],
+    modelo: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^[A-Za-z0-9\s\-]+$/) // Letras, números, espaços e traço
+      ]
+    ],
+    ano: [
+      '',
+      [
+        Validators.required,
+        Validators.min(1909),
+        Validators.max(2026)
+      ]
+    ],
+    tipo: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^[A-Za-zÀ-ÿ\s]+$/)
+      ]
+    ],
     clienteId: [null, Validators.required]
   });
 
@@ -69,4 +106,11 @@ export class VeiculoFormComponent {
       this.messageService.add({ severity: 'warn', summary: 'Atenção', detail: 'Preencha todos os campos obrigatórios' });
     }
   }
+
+  formatarPlaca(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 7);
+    this.veiculoForm.get('placa')?.setValue(input.value);
+  }
+
 }
