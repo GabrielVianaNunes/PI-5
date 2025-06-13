@@ -70,3 +70,25 @@ input:focus, .p-dropdown:focus-within {
 input#placa {
   text-transform: uppercase;
 }
+
+.acoes-inferiores {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 2rem;
+}
+
+.botao-voltar {
+  background-color: #a9afb4;
+  color: white;
+  border: none;
+  font-weight: 500;
+  padding: 0.65rem 1.4rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.botao-voltar:hover {
+  background-color: #5a6268;
+  transform: translateY(-1px);
+}

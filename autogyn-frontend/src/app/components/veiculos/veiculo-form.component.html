@@ -55,5 +55,16 @@
     </div>
 
     <button pButton type="submit" label="Salvar Veículo" class="botao-salvar"></button>
+    <div class="acoes-inferiores">
+      <button
+        pButton
+        type="button"
+        label="Voltar para Lista"
+        icon="pi pi-arrow-left"
+        class="botao-voltar"
+        [routerLink]="['/veiculos']"
+      ></button>
+    </div>
+
   </form>
 </div>
