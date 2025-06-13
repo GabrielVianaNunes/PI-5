@@ -1,35 +1,66 @@
 <!-- src/app/components/ordens/ordem-list.component.html -->
 
-<div class="container">
-  <h2>Ordens de Serviço</h2>
+<div class="ordem-container">
+  <h2 class="ordem-title">Ordens de Serviço</h2>
 
-  <button pButton type="button" label="Nova Ordem" routerLink="/ordens/novo" class="p-button-success mb-3"></button>
+  <div class="nova-ordem-button">
+    <button 
+      pButton 
+      type="button" 
+      icon="pi pi-plus" 
+      label="Nova Ordem" 
+      routerLink="/ordens/novo" 
+      class="p-button-primary">
+    </button>
+  </div>
 
-  <p-table [value]="ordens" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'">
+  <p-table 
+    [value]="ordens" 
+    [paginator]="true" 
+    [rows]="10" 
+    [responsiveLayout]="'scroll'" 
+    class="p-datatable-sm p-datatable-gridlines p-datatable-striped ordem-tabela">
+
     <ng-template pTemplate="header">
       <tr>
-        <th>ID</th>
-        <th>Data Abertura</th>
-        <th>Status</th>
-        <th>Cliente</th>
-        <th>Veículo</th>
-        <th>Ações</th>
+        <th style="width: 6%">ID</th>
+        <th style="width: 20%">Data Abertura</th>
+        <th style="width: 15%">Status</th>
+        <th style="width: 25%">Cliente</th>
+        <th style="width: 20%">Veículo</th>
+        <th style="width: 14%">Ações</th>
       </tr>
     </ng-template>
+
     <ng-template pTemplate="body" let-ordem>
       <tr>
         <td>{{ ordem.id }}</td>
         <td>{{ ordem.dataAbertura | date: 'shortDate' }}</td>
-        <td>{{ ordem.status }}</td>
+        <td>
+          <span class="status-badge status-{{ ordem.status?.toLowerCase() }}">
+            {{ ordem.status }}
+          </span>
+        </td>
         <td>{{ ordem.cliente?.nome }}</td>
         <td>{{ ordem.veiculo?.placa }}</td>
-        <td>
-          <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2"
-                  [routerLink]="['/ordens', ordem.id]"></button>
-          <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                  (click)="excluir(ordem.id)"></button>
+        <td class="actions-cell">
+          <button 
+            pButton 
+            type="button" 
+            icon="pi pi-pencil" 
+            class="p-button-rounded p-button-text p-button-info"
+            [routerLink]="['/ordens/editar', ordem.id]">
+          </button>
+          <button 
+            pButton 
+            type="button" 
+            icon="pi pi-trash" 
+            class="p-button-rounded p-button-text p-button-danger"
+            (click)="excluir(ordem.id)">
+          </button>
         </td>
       </tr>
     </ng-template>
+
   </p-table>
 </div>
