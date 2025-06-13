@@ -1,5 +1,3 @@
-// src/app/components/estoque/peca-form.ts
-
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -36,8 +34,16 @@ export class PecaFormComponent {
     descricao: [''],
     quantidade: [0, [Validators.required, Validators.min(0)]],
     valorUnitario: [0, [Validators.required, Validators.min(0)]],
-    estoqueMinimo: [0, [Validators.min(0)]]
+    estoqueMinimo: [0, [Validators.min(0)]],
+    localizacao: ['']
   });
+
+  editMode: any;
+
+  // Método para voltar ao dashboard
+  voltar() {
+    this.router.navigate(['/dashboard']); // ou ['/'] se for a raiz
+  }
 
   onSubmit() {
     if (this.pecaForm.valid) {
