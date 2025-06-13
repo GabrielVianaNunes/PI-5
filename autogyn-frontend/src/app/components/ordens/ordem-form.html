@@ -1,5 +1,6 @@
 <div class="ordem-form-container">
   <h2>Cadastro de Ordem de Serviço</h2>
+
   <form [formGroup]="ordemForm" (ngSubmit)="onSubmit()" class="p-fluid">
 
     <div class="p-field">
@@ -82,6 +83,11 @@
       </div>
     </div>
 
-    <button pButton type="submit" label="Salvar Ordem de Serviço" class="submit-button"></button>
+    <!-- Botões lado a lado -->
+    <div class="button-group">
+      <button pButton type="submit" label="Salvar Ordem de Serviço" class="submit-button"></button>
+      <button type="button" pButton icon="pi pi-arrow-left" label="Voltar para Lista" class="submit-button" (click)="voltarParaLista()"></button>
+    </div>
+
   </form>
 </div>

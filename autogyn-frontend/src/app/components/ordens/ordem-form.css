@@ -102,9 +102,10 @@ button[pButton]:hover {
 
 /* Botão de envio */
 .submit-button {
-  margin-top: 2rem;
   background-color: #2c3e50 !important;
   color: #ffffff !important;
+  margin-top: 2rem;
+  margin-right: 1rem;
 }
 
 .submit-button:hover {
@@ -120,4 +121,12 @@ button[pButton]:hover {
 
 .add-item-button:hover {
   background-color: #1a2e40 !important;
+}
+
+/* Agrupamento dos botões de envio e voltar */
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
 }
