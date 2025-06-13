@@ -1,36 +1,73 @@
 <!-- src/app/components/estoque/peca-form.html -->
-
-<form [formGroup]="pecaForm" (ngSubmit)="onSubmit()" class="p-fluid">
-
-  <div class="p-field">
-    <label for="nome">Nome</label>
-    <input id="nome" type="text" pInputText formControlName="nome" />
+<div class="form-container">
+  <div class="form-header">
+    <div class="header-content">
+      <h2 class="form-title">{{ editMode ? 'Editar Peça' : 'Nova Peça' }}</h2>
+      <button pButton icon="pi pi-arrow-left" label="Voltar" 
+        class="back-button" (click)="voltar()"></button>
+    </div>
   </div>
 
-  <div class="p-field">
-    <label for="codigo">Código</label>
-    <input id="codigo" type="text" pInputText formControlName="codigo" />
+  <div class="form-content">
+    <form [formGroup]="pecaForm" (ngSubmit)="onSubmit()" class="form-grid">
+      <!-- Linha 1 - Nome e Descrição -->
+      <div class="form-field">
+        <label for="nome">Nome *</label>
+        <input pInputText id="nome" formControlName="nome" 
+               [ngClass]="{'p-invalid': pecaForm.get('nome')?.invalid && pecaForm.get('nome')?.touched}" />
+        <small class="invalid-feedback" *ngIf="pecaForm.get('nome')?.invalid && pecaForm.get('nome')?.touched">
+          Nome é obrigatório
+        </small>
+      </div>
+      
+      <div class="form-field">
+        <label for="descricao">Descrição</label>
+        <textarea pInputTextarea id="descricao" formControlName="descricao" rows="2"></textarea>
+      </div>
+      
+      <!-- Linha 2 - Quantidade e Preço Unitário -->
+      <div class="form-field">
+        <label for="quantidade">Quantidade *</label>
+        <p-inputNumber id="quantidade" formControlName="quantidade" 
+                      [ngClass]="{'p-invalid': pecaForm.get('quantidade')?.invalid && pecaForm.get('quantidade')?.touched}"
+                      mode="decimal" [min]="0"></p-inputNumber>
+        <small class="invalid-feedback" *ngIf="pecaForm.get('quantidade')?.invalid && pecaForm.get('quantidade')?.touched">
+          Quantidade inválida
+        </small>
+      </div>
+      
+      <div class="form-field">
+        <label for="valorUnitario">Preço Unitário (R$) *</label>
+        <p-inputNumber id="valorUnitario" formControlName="valorUnitario" 
+                      [ngClass]="{'p-invalid': pecaForm.get('valorUnitario')?.invalid && pecaForm.get('valorUnitario')?.touched}"
+                      mode="currency" currency="BRL" locale="pt-BR" [min]="0"></p-inputNumber>
+        <small class="invalid-feedback" *ngIf="pecaForm.get('valorUnitario')?.invalid && pecaForm.get('valorUnitario')?.touched">
+          Valor inválido
+        </small>
+      </div>
+      
+      <!-- Linha 3 - Estoque Mínimo e Localização -->
+      <div class="form-field">
+        <label for="estoqueMinimo">Estoque Mínimo *</label>
+        <p-inputNumber id="estoqueMinimo" formControlName="estoqueMinimo" 
+                      [ngClass]="{'p-invalid': pecaForm.get('estoqueMinimo')?.invalid && pecaForm.get('estoqueMinimo')?.touched}"
+                      mode="decimal" [min]="0"></p-inputNumber>
+        <small class="invalid-feedback" *ngIf="pecaForm.get('estoqueMinimo')?.invalid && pecaForm.get('estoqueMinimo')?.touched">
+          Valor inválido
+        </small>
+      </div>
+      
+      <div class="form-field">
+        <label for="localizacao">Localização</label>
+        <input pInputText id="localizacao" formControlName="localizacao" />
+      </div>
+      
+      <div class="form-actions">
+        <button pButton type="button" label="Cancelar" 
+                class="cancel-button" routerLink="/estoque"></button>
+        <button pButton type="submit" label="Salvar" 
+                class="save-button" [disabled]="pecaForm.invalid"></button>
+      </div>
+    </form>
   </div>
-
-  <div class="p-field">
-    <label for="descricao">Descrição</label>
-    <input id="descricao" type="text" pInputText formControlName="descricao" />
-  </div>
-
-  <div class="p-field">
-    <label for="quantidade">Quantidade</label>
-    <input id="quantidade" type="number" pInputText formControlName="quantidade" />
-  </div>
-
-  <div class="p-field">
-    <label for="valorUnitario">Valor Unitário</label>
-    <input id="valorUnitario" type="number" pInputText formControlName="valorUnitario" />
-  </div>
-
-  <div class="p-field">
-    <label for="estoqueMinimo">Estoque Mínimo</label>
-    <input id="estoqueMinimo" type="number" pInputText formControlName="estoqueMinimo" />
-  </div>
-
-  <button pButton type="submit" label="Salvar"></button>
-</form>
+</div>
