@@ -172,3 +172,28 @@ input,
 .modal-opcao:hover {
   background-color: #e3f2fd;
 }
+
+/* Centraliza verticalmente e alinha conteúdo no modal */
+::ng-deep .p-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem !important;
+}
+
+/* Alinha e estiliza cada opção do modal */
+.modal-opcao {
+  width: 100%;
+  max-width: 220px;
+  text-align: center;
+  padding: 0.8rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  transition: background-color 0.2s ease;
+}
+
+.modal-opcao:hover {
+  background-color: #e3f2fd;
+}
