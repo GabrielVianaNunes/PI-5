@@ -1,41 +1,199 @@
-/* src/app/components/pagamentos/pagamento-form.css */
+/* Estiliza o painel flutuante do dropdown */
+body .p-dropdown-panel {
+  z-index: 1050 !important; /* acima do conteúdo normal */
+  background-color: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
 
-.card {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 1rem;
-  background-color: #fff;
+/* Itens da lista */
+body .p-dropdown-items .p-dropdown-item {
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+/* Hover refinado */
+body .p-dropdown-items .p-dropdown-item:hover {
+  background-color: #f0f4ff;
+}
+
+/* Evita que fique por trás de qualquer conteúdo */
+body .p-dropdown {
+  z-index: 1040;
+}
+
+.p-dropdown {
+  margin-bottom: 1rem;
+}
+
+.form-container {
+  max-width: 640px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
 }
 
 h2 {
   text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2c3e50;
   margin-bottom: 2rem;
-  font-size: 1.8rem;
-  color: #333;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 label {
-  display: block;
-  margin-bottom: 0.5rem;
   font-weight: 600;
+  margin-bottom: 0.4rem;
   color: #444;
 }
 
 input,
-p-inputnumber,
-p-dropdown {
+.p-inputtext,
+.p-inputnumber,
+.p-dropdown {
   width: 100%;
 }
 
-button {
+.botao-submit {
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 8px;
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.botao-submit:hover {
+  background-color: #125ea9;
+  cursor: pointer;
+}
+
+.form-group.invalid input,
+.form-group.invalid .p-inputnumber,
+.form-group.invalid .p-dropdown {
+  border: 1px solid #e53935 !important;
+  border-radius: 4px;
+}
+
+.erro-campo {
+  color: #e53935;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.pi.pi-spinner {
+  font-size: 1rem;
+}
+
+.botao-submit {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.botao-submit:hover {
+  background-color: #125ea9;
+  transform: scale(1.01);
+  cursor: pointer;
+}
+
+.select-modal {
+  width: 100%;
+  padding: 0.6rem;
+  text-align: left;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #333;
+}
+
+.select-modal:hover {
+  border-color: #1976d2;
+  background-color: #f4f9ff;
+}
+
+.modal-opcao {
+  padding: 0.8rem;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-opcao:hover {
+  background-color: #e3f2fd;
+}
+
+/* Fundo interno sólido do diálogo */
+::ng-deep .p-dialog {
+  background: #ffffff !important;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Fundo escurecido por trás do modal */
+::ng-deep .p-component-overlay {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(1px);
+  z-index: 1001;
+}
+
+/* Estilo das opções dentro do modal */
+.modal-opcao {
+  padding: 0.8rem;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  background-color: white;
+  z-index: 1100;
+}
+
+.modal-opcao:hover {
+  background-color: #e3f2fd;
+}
+
+/* Centraliza verticalmente e alinha conteúdo no modal */
+::ng-deep .p-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem !important;
+}
+
+/* Alinha e estiliza cada opção do modal */
+.modal-opcao {
+  width: 100%;
+  max-width: 220px;
+  text-align: center;
+  padding: 0.8rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  transition: background-color 0.2s ease;
+}
+
+.modal-opcao:hover {
+  background-color: #e3f2fd;
 }

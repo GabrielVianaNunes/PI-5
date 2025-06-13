@@ -1,24 +1,133 @@
-/* src/app/components/pagamentos/pagamento-list.css */
-
-.card {
-  padding: 1.5rem;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin: 2rem auto;
+.pagamento-container {
   max-width: 1200px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 h2 {
-  margin-bottom: 1rem;
-  font-size: 1.8rem;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  text-align: center;
   color: #2c3e50;
 }
 
-.mt-3 {
-  margin-top: 1.5rem;
+.tabela-wrapper {
+  overflow-x: auto;
 }
 
-button {
+.tabela-pagamentos {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.tabela-pagamentos thead {
+  background-color: #f4f6f8;
+}
+
+.tabela-pagamentos th,
+.tabela-pagamentos td {
+  padding: 0.9rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tabela-pagamentos tr:hover {
+  background-color: #f1faff;
+}
+
+.valor {
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.status {
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.linha-pago .status {
+  color: #2e7d32;
+}
+
+.linha-pendente .status {
+  color: #f9a825;
+}
+
+.linha-cancelado .status {
+  color: #c62828;
+}
+
+.botao {
+  background: none;
+  border: none;
+  cursor: pointer;
   margin-right: 0.5rem;
+  font-size: 1rem;
+}
+
+.botao-editar {
+  color: #1976d2;
+}
+
+.botao-editar:hover {
+  color: #0d47a1;
+}
+
+.botao-excluir {
+  color: #d32f2f;
+}
+
+.botao-excluir:hover {
+  color: #b71c1c;
+}
+
+.area-novo {
+  margin-top: 2rem;
+  text-align: right;
+}
+
+.botao-novo {
+  background-color: #388e3c;
+  color: #ffffff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.botao-novo:hover {
+  background-color: #2e7d32;
+}
+
+.topo-listagem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.botao-novo {
+  background-color: #1976d2;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.botao-novo:hover {
+  background-color: #125ea9;
 }
