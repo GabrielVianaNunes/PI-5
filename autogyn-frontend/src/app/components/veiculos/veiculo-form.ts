@@ -13,6 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-veiculo-form',
@@ -25,7 +26,8 @@ import { ToastModule } from 'primeng/toast';
     InputTextModule,
     DropdownModule,
     ButtonModule,
-    ToastModule
+    ToastModule,
+    RouterModule
   ],
   providers: [MessageService]
 })
