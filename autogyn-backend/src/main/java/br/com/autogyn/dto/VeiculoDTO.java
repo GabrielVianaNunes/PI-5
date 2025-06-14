@@ -27,9 +27,11 @@ public class VeiculoDTO {
     @NotNull(message = "Cliente ID é obrigatório")
     private Long clienteId;
 
+    private String clienteNome;
+
     public VeiculoDTO() {}
 
-    public VeiculoDTO(Long id, String placa, String marca, String modelo, Integer ano, String tipo, Long clienteId) {
+    public VeiculoDTO(Long id, String placa, String marca, String modelo, Integer ano, String tipo, Long clienteId, String clienteNome) {
         this.id = id;
         this.placa = placa;
         this.marca = marca;
@@ -37,6 +39,7 @@ public class VeiculoDTO {
         this.ano = ano;
         this.tipo = tipo;
         this.clienteId = clienteId;
+        this.clienteNome = clienteNome;
     }
 
     // Getters e Setters
@@ -96,4 +99,13 @@ public class VeiculoDTO {
     public void setClienteId(Long clienteId) {
         this.clienteId = clienteId;
     }
+
+    public String getClienteNome() {
+        return clienteNome;
+    }
+
+    public void setClienteNome(String clienteNome) {
+        this.clienteNome = clienteNome;
+    }
+
 }
