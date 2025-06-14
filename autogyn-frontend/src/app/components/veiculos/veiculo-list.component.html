@@ -3,10 +3,10 @@
     <h2>Lista de Veículos</h2>
     <button
       pButton
-      label="Novo"
+      label="Novo Veículo"
       icon="pi pi-plus"
       [routerLink]="['/veiculos/novo']"
-      class="botao-novo"
+      class="submit-button"
     ></button>
   </div>
 
@@ -31,7 +31,7 @@
         <td>{{ veiculo.modelo }}</td>
         <td>{{ veiculo.ano }}</td>
         <td>{{ veiculo.tipo }}</td>
-        <td>{{ veiculo.cliente?.nome }}</td>
+        <td>{{ veiculo.clienteNome }}</td>
         <td class="acoes">
           <button
             pButton
@@ -48,6 +48,16 @@
           ></button>
         </td>
       </tr>
+      <div class="acoes-inferiores">
+          <button
+            pButton
+            type="button"
+            label="Voltar para Home"
+            icon="pi pi-home"
+            class="botao-voltar-home"
+            [routerLink]="['/home']"
+          ></button>
+        </div>
     </tbody>
   </table>
 </div>

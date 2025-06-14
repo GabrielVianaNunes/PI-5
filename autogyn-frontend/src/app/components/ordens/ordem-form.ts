@@ -85,4 +85,8 @@ export class OrdemFormComponent {
       this.messageService.add({ severity: 'warn', summary: 'Formulário inválido', detail: 'Preencha todos os campos obrigatórios.' });
     }
   }
+
+  voltarParaLista() {
+    this.router.navigate(['/ordens']);
+  }
 }

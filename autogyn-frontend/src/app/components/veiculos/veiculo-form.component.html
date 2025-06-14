@@ -32,8 +32,12 @@
     <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('ano') }">
       <label for="ano">Ano</label>
       <input id="ano" type="number" pInputText formControlName="ano" />
-      <div class="campo-erro" *ngIf="veiculoForm.get('ano')?.hasError('min') && veiculoForm.get('ano')?.touched">Ano mínimo: 1909</div>
-      <div class="campo-erro" *ngIf="veiculoForm.get('ano')?.hasError('max') && veiculoForm.get('ano')?.touched">Ano máximo: 2026</div>
+      <div class="campo-erro" *ngIf="veiculoForm.get('ano')?.hasError('min') && veiculoForm.get('ano')?.touched">
+        Ano mínimo: 1909
+      </div>
+      <div class="campo-erro" *ngIf="veiculoForm.get('ano')?.hasError('max') && veiculoForm.get('ano')?.touched">
+        Ano máximo: 2026
+      </div>
     </div>
 
     <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('tipo') }">
@@ -49,11 +53,29 @@
         optionLabel="nome"
         optionValue="id"
         formControlName="clienteId"
-        placeholder="Selecione um cliente">
-      </p-dropdown>
+        placeholder="Selecione um cliente"
+      ></p-dropdown>
       <div class="campo-erro" *ngIf="isInvalid('clienteId')">Seleção obrigatória</div>
     </div>
 
-    <button pButton type="submit" label="Salvar Veículo" class="botao-salvar"></button>
+    <!-- Botões agrupados -->
+    <div class="button-group">
+      <button
+        pButton
+        type="submit"
+        label="Salvar Veículo"
+        class="submit-button"
+      ></button>
+
+      <button
+        pButton
+        type="button"
+        label="Voltar para Lista"
+        icon="pi pi-arrow-left"
+        class="secondary-button"
+        [routerLink]="['/veiculos']"
+      ></button>
+    </div>
+
   </form>
 </div>

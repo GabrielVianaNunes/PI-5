@@ -1,29 +1,93 @@
-<form [formGroup]="ordemForm" (ngSubmit)="onSubmit()" class="p-fluid">
-  <div class="p-field">
-    <label for="veiculoId">Veículo</label>
-    <p-dropdown
-      [options]="veiculos"
-      optionLabel="modelo"
-      optionValue="id"
-      formControlName="veiculoId"
-      placeholder="Selecione o veículo"
-    ></p-dropdown>
-  </div>
+<div class="ordem-form-container">
+  <h2>Cadastro de Ordem de Serviço</h2>
 
-  <div class="p-field">
-    <label for="dataAbertura">Data de Abertura</label>
-    <p-calendar formControlName="dataAbertura" dateFormat="dd/mm/yy" showIcon></p-calendar>
-  </div>
+  <form [formGroup]="ordemForm" (ngSubmit)="onSubmit()" class="p-fluid">
 
-  <div class="p-field">
-    <label for="dataFechamento">Data de Fechamento</label>
-    <p-calendar formControlName="dataFechamento" dateFormat="dd/mm/yy" showIcon></p-calendar>
-  </div>
+    <div class="p-field">
+      <label for="veiculoId">Veículo</label>
+      <p-dropdown
+        [options]="veiculos"
+        optionLabel="modelo"
+        optionValue="id"
+        formControlName="veiculoId"
+        placeholder="Selecione o veículo"
+      ></p-dropdown>
+    </div>
 
-  <div class="p-field">
-    <label for="status">Status</label>
-    <input id="status" type="text" pInputText formControlName="status" />
-  </div>
+    <div class="p-field">
+      <label for="clienteId">Cliente</label>
+      <p-dropdown
+        [options]="clientes"
+        optionLabel="nome"
+        optionValue="id"
+        formControlName="clienteId"
+        placeholder="Selecione o cliente"
+      ></p-dropdown>
+    </div>
 
-  <button pButton type="submit" label="Salvar Ordem de Serviço"></button>
-</form>
+    <div class="p-field-group">
+      <div class="p-field">
+        <label for="dataAbertura">Data de Abertura</label>
+        <p-calendar formControlName="dataAbertura" dateFormat="dd/mm/yy" showIcon></p-calendar>
+      </div>
+
+      <div class="p-field">
+        <label for="dataFechamento">Data de Fechamento</label>
+        <p-calendar formControlName="dataFechamento" dateFormat="dd/mm/yy" showIcon></p-calendar>
+      </div>
+    </div>
+
+    <div class="p-field">
+      <label for="status">Status</label>
+      <input id="status" type="text" pInputText formControlName="status" />
+    </div>
+
+    <div class="p-field">
+      <label for="observacoes">Observações</label>
+      <textarea id="observacoes" rows="3" pInputTextarea formControlName="observacoes"></textarea>
+    </div>
+
+    <div class="items-section">
+      <h3>Itens da Ordem</h3>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-plus"
+        label="Adicionar Item"
+        class="add-item-button"
+        (click)="adicionarItem()"
+      ></button>
+
+      <div *ngFor="let item of itens.controls; let i = index" [formGroupName]="i" class="item-card">
+        <div class="p-field">
+          <label>Descrição</label>
+          <input pInputText formControlName="descricao" />
+        </div>
+
+        <div class="p-field">
+          <label>Tipo</label>
+          <p-dropdown [options]="['SERVICO', 'PECA']" formControlName="tipo"></p-dropdown>
+        </div>
+
+        <div class="p-field">
+          <label>Quantidade</label>
+          <input type="number" pInputText formControlName="quantidade" />
+        </div>
+
+        <div class="p-field">
+          <label>Valor Unitário</label>
+          <input type="number" pInputText formControlName="valorUnitario" />
+        </div>
+
+        <button type="button" pButton icon="pi pi-trash" class="p-button-danger" (click)="removerItem(i)"></button>
+      </div>
+    </div>
+
+    <!-- Botões lado a lado -->
+    <div class="button-group">
+      <button pButton type="submit" label="Salvar Ordem de Serviço" class="submit-button"></button>
+      <button type="button" pButton icon="pi pi-arrow-left" label="Voltar para Lista" class="submit-button" (click)="voltarParaLista()"></button>
+    </div>
+
+  </form>
+</div>
