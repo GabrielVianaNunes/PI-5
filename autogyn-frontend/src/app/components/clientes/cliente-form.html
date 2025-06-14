@@ -3,12 +3,12 @@
 
   <form [formGroup]="clienteForm" (ngSubmit)="salvar()" class="p-fluid">
 
+    <!-- Campos -->
+
     <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('nome') }">
       <label for="nome">Nome</label>
       <input id="nome" type="text" pInputText formControlName="nome" placeholder="Digite o nome completo" />
-      <div class="campo-erro" *ngIf="isInvalid('nome')">
-        O nome deve conter apenas letras.
-      </div>
+      <div class="campo-erro" *ngIf="isInvalid('nome')">O nome deve conter apenas letras.</div>
     </div>
 
     <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('tipoCliente') }">
@@ -22,9 +22,7 @@
         placeholder="Selecione o tipo"
         (onChange)="atualizarValidacaoDocumento()"
       ></p-dropdown>
-      <div class="campo-erro" *ngIf="isInvalid('tipoCliente')">
-        Tipo de cliente é obrigatório.
-      </div>
+      <div class="campo-erro" *ngIf="isInvalid('tipoCliente')">Tipo de cliente é obrigatório.</div>
     </div>
 
     <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('telefone') }">
@@ -40,17 +38,13 @@
         (input)="formatarTelefone($event)"
         (keypress)="permitirSomenteNumeros($event)"
       />
-      <div class="campo-erro" *ngIf="isInvalid('telefone')">
-        Telefone deve conter exatamente 11 dígitos (incluindo DDD).
-      </div>
+      <div class="campo-erro" *ngIf="isInvalid('telefone')">Telefone deve conter exatamente 11 dígitos (incluindo DDD).</div>
     </div>
 
     <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('email') }">
       <label for="email">E-mail</label>
       <input id="email" type="email" pInputText formControlName="email" placeholder="exemplo@email.com" />
-      <div class="campo-erro" *ngIf="isInvalid('email')">
-        Insira um e-mail válido.
-      </div>
+      <div class="campo-erro" *ngIf="isInvalid('email')">Insira um e-mail válido.</div>
     </div>
 
     <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('documento') }">
@@ -76,35 +70,26 @@
     <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('endereco') }">
       <label for="endereco">Endereço</label>
       <input id="endereco" type="text" pInputText formControlName="endereco" placeholder="Rua, número, bairro, cidade" />
-      <div class="campo-erro" *ngIf="isInvalid('endereco')">
-        Endereço é obrigatório.
-      </div>
+      <div class="campo-erro" *ngIf="isInvalid('endereco')">Endereço é obrigatório.</div>
     </div>
 
-    <div class="form-buttons">
+    <!-- Botões alinhados -->
+    <div class="button-group">
       <button
         pButton
         type="submit"
-        label="Salvar"
         icon="pi pi-check"
+        label="Salvar Cliente"
+        class="submit-button"
         [disabled]="clienteForm.invalid"
-        class="p-button-success"
       ></button>
       <button
         pButton
         type="button"
-        label="Cancelar"
-        icon="pi pi-times"
-        class="p-button-secondary"
+        icon="pi pi-arrow-left"
+        label="Voltar para Lista"
+        class="submit-button"
         (click)="cancelar()"
-      ></button>
-      <button
-        pButton
-        type="button"
-        label="Início"
-        icon="pi pi-home"
-        class="p-button-warning"
-        (click)="voltarInicio()"
       ></button>
     </div>
   </form>
