@@ -1,38 +1,48 @@
 <!-- src/app/components/estoque/peca-list.html -->
 <div class="card">
-  <div class="table-header">
+  <div class="table-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
     <h2 class="table-title">Peças em Estoque</h2>
-    <a pButton icon="pi pi-plus" label="Nova Peça" class="new-item-button"
+    <a pButton icon="pi pi-plus" label="Nova Peça" class="new-item-button" 
        routerLink="/estoque/novo"></a>
   </div>
 
   <p-table [value]="pecas" [paginator]="true" [rows]="10" responsiveLayout="scroll"
            [rowsPerPageOptions]="[5,10,25,50]" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} itens">
+    
     <ng-template pTemplate="header">
       <tr>
         <th>Nome</th>
         <th>Descrição</th>
         <th>Quantidade</th>
         <th>Preço Unitário</th>
-        <th style="width: 120px;">Ações</th>
+        <th style="text-align: center; width: 130px;">Ações</th>
       </tr>
     </ng-template>
+
     <ng-template pTemplate="body" let-peca>
       <tr>
         <td>{{ peca.nome }}</td>
         <td>{{ peca.descricao }}</td>
         <td [ngClass]="peca.quantidade < peca.estoqueMinimo ? 'quantity-low' : 'quantity-ok'">
           {{ peca.quantidade }}
-          <span *ngIf="peca.quantidade < peca.estoqueMinimo" class="pi pi-exclamation-triangle" style="margin-left: 5px;"></span>
+          <span *ngIf="peca.quantidade < peca.estoqueMinimo" 
+                class="pi pi-exclamation-triangle" style="margin-left: 5px;" 
+                title="Estoque abaixo do mínimo"></span>
         </td>
-        <td>{{ peca.valorUnitario | currency:'BRL' }}</td>
-        <td class="actions-cell">
-          <a pButton icon="pi pi-pencil" class="p-button-rounded p-button-warning p-button-sm"
-             routerLink="/estoque/editar/{{peca.id}}"></a>
-          <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-sm"
-                  (click)="excluir(peca.id)"></button>
+        <td>{{ peca.valorUnitario | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+        <td style="text-align: center;">
+          <a pButton icon="pi pi-pencil"
+             class="p-button-rounded p-button-warning p-button-sm"
+             [routerLink]="['/estoque/editar', peca.id]"
+             title="Editar"></a>
+
+          <button pButton icon="pi pi-trash"
+                  class="p-button-rounded p-button-danger p-button-sm"
+                  (click)="excluir(peca.id)"
+                  title="Excluir"></button>
         </td>
       </tr>
     </ng-template>
+
   </p-table>
 </div>

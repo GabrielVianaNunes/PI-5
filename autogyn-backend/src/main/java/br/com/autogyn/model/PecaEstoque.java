@@ -12,6 +12,7 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "pecas_estoque")
@@ -34,8 +35,9 @@ public class PecaEstoque {
     @Column(name = "valor_unitario", precision = 10, scale = 2)
     private BigDecimal valorUnitario;
 
+    @Pattern(regexp = "^P-?\\d{3,4}[A-Z]{0,2}$", message = "Código de peça inválido (ex: P-123 ou P123A)")
     @Column(name = "codigo", unique = true)
-    private String codigo; // Código interno da peça
+    private String codigo;
 
     @Column(name = "estoque_minimo")
     private Integer estoqueMinimo;
