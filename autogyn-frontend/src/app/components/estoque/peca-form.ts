@@ -54,6 +54,7 @@ export class PecaFormComponent {
     }
   }
 
+  // ✅ Método corrigido para voltar à lista de peças
   voltar() {
     this.router.navigate(['/estoque']);
   }
