@@ -25,34 +25,20 @@ label {
   color: #34495e;
 }
 
-input, .p-dropdown {
+input,
+.p-dropdown {
   width: 100%;
-  padding: 0.6rem;
-  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
   border: 1px solid #dcdfe6;
   font-size: 0.95rem;
 }
 
-input:focus, .p-dropdown:focus-within {
+input:focus,
+.p-dropdown:focus-within {
   outline: none;
   border-color: #2c7be5;
   box-shadow: 0 0 0 2px rgba(44, 123, 229, 0.15);
-}
-
-.botao-salvar {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  background-color: #2c7be5;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-}
-
-.botao-salvar:hover {
-  background-color: #1a5dc9;
 }
 
 .invalid-field input,
@@ -71,24 +57,47 @@ input#placa {
   text-transform: uppercase;
 }
 
-.acoes-inferiores {
+/* Alinhamento e agrupamento dos botões */
+.button-group {
   display: flex;
-  justify-content: flex-start;
-  margin-top: 2rem;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2.5rem;
 }
 
-.botao-voltar {
-  background-color: #a9afb4;
-  color: white;
-  border: none;
-  font-weight: 500;
-  padding: 0.65rem 1.4rem;
+/* Botão Salvar */
+.submit-button {
+  background-color: #2c3e50 !important;
+  color: #ffffff !important;
+  font-weight: bold;
   border-radius: 8px;
-  font-size: 0.95rem;
-  transition: background-color 0.2s ease-in-out;
+  padding: 0.75rem 1.25rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.botao-voltar:hover {
-  background-color: #5a6268;
-  transform: translateY(-1px);
+.submit-button:hover {
+  background-color: #1a2e40 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(44, 62, 80, 0.3);
 }
+
+/* Botão Voltar (agora com estilo igual ao botão Salvar) */
+.secondary-button {
+  background-color: #2c3e50 !important;
+  color: #ffffff !important;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: none;
+}
+
+.secondary-button:hover {
+  background-color: #1a2e40 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(44, 62, 80, 0.3);
+}
+
