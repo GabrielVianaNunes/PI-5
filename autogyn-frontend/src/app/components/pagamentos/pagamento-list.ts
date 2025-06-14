@@ -33,7 +33,9 @@ export class PagamentoListComponent {
     });
   }
 
-  excluir(id: number) {
+  excluir(id?: number) {
+    if (id == null) return;
+
     if (confirm('Tem certeza que deseja excluir este pagamento?')) {
       this.pagamentoService.delete(id).subscribe({
         next: () => {
@@ -44,4 +46,5 @@ export class PagamentoListComponent {
       });
     }
   }
+
 }

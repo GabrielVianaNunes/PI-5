@@ -13,38 +13,8 @@ import { ToastService } from 'src/app/services/toast.service';
   selector: 'app-cliente-list',
   standalone: true,
   imports: [CommonModule, TableModule, ButtonModule, RouterModule],
-  template: `
-    <p-table [value]="clientes">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Nome</th>
-          <th>Tipo</th>
-          <th>Documento</th>
-          <th>Telefone</th>
-          <th>Endereço</th>
-          <th>Ações</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-cliente>
-        <tr>
-          <td>{{ cliente.nome }}</td>
-          <td>{{ cliente.tipoCliente }}</td>
-          <td>{{ cliente.documento }}</td>
-          <td>{{ cliente.telefone }}</td>
-          <td>{{ cliente.endereco }}</td>
-          <td>
-            <button pButton type="button" icon="pi pi-pencil"
-                    [routerLink]="['/clientes/editar', cliente.id]"
-                    class="p-button-rounded p-button-info p-mr-2"></button>
-            <button pButton type="button" icon="pi pi-trash"
-                    (click)="excluir(cliente.id!)"
-                    class="p-button-rounded p-button-danger"></button>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  `,
-  styles: [``]
+  templateUrl: './cliente-list.html',
+  styleUrls: ['./cliente-list.css']
 })
 export class ClienteListComponent {
   clientes: Cliente[] = [];
@@ -62,7 +32,8 @@ export class ClienteListComponent {
     });
   }
 
-  excluir(id: number) {
+  excluir(id?: number) {
+    if (id == null) return; // ou lançar erro
     if (confirm('Tem certeza que deseja excluir este cliente?')) {
       this.clienteService.delete(id).subscribe({
         next: () => {
@@ -73,4 +44,5 @@ export class ClienteListComponent {
       });
     }
   }
+
 }

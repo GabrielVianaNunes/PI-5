@@ -31,7 +31,9 @@ export class VeiculoListComponent {
     });
   }
 
-  excluir(id: number) {
+  excluir(id?: number) {
+    if (!id) return;
+
     if (confirm('Tem certeza que deseja excluir este veículo?')) {
       this.veiculoService.delete(id).subscribe({
         next: () => {
@@ -42,4 +44,5 @@ export class VeiculoListComponent {
       });
     }
   }
+
 }

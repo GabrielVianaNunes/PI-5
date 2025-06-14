@@ -1,67 +1,105 @@
 /* cliente-list.css */
 .cliente-list-container {
+  max-width: 1100px;
+  margin: 2rem auto;
   padding: 2rem;
   background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin: 2rem auto;
-  max-width: 1200px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-.cliente-list-container h2 {
+.cliente-title {
+  font-size: 1.8rem;
   color: #2c3e50;
-  font-size: 1.5rem;
+  text-align: center;
   margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid #3498db;
 }
 
-.p-table {
-  width: 100%;
-  margin-top: 1.5rem;
-  border-collapse: collapse;
+.nova-cliente-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
 }
 
-.p-table th {
-  background-color: #3498db;
-  color: white;
-  padding: 1rem;
-  text-align: left;
+.nova-cliente-button button {
+  background-color: #2c3e50 !important;
+  color: #ffffff !important;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nova-cliente-button button:hover {
+  background-color: #1a2e40 !important;
+  box-shadow: 0 6px 15px rgba(44, 62, 80, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Estilo da tabela */
+::ng-deep .cliente-tabela .p-datatable-thead > tr > th {
+  background-color: #f5f7fa;
+  color: #2c3e50;
   font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #dfe3e8;
 }
 
-.p-table td {
-  padding: 1rem;
-  border-bottom: 1px solid #ecf0f1;
+::ng-deep .cliente-tabela .p-datatable-tbody > tr > td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.95rem;
+  color: #444;
 }
 
-.p-table tr:hover {
-  background-color: #f8f9fa;
+.acoes {
+  display: flex;
+  gap: 0.5rem;
 }
 
-.p-button-sm {
-  padding: 0.5rem;
-  border-radius: 50%;
+/* Botão Voltar para Home */
+.voltar-home-button {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 2rem;
 }
 
-.p-button-info {
-  background-color: #3498db;
-  color: white;
+.voltar-home-button button {
+  background-color: #2c3e50 !important;
+  color: #ffffff !important;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  font-size: 0.95rem;
+  min-width: 140px;
 }
 
-.p-button-danger {
-  background-color: #e74c3c;
-  color: white;
+.voltar-home-button button:hover {
+  background-color: #1a2e40 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(44, 62, 80, 0.3);
 }
 
-.botao-adicionar {
-  margin-top: 1.5rem;
-  text-align: right;
+/* Botões padronizados */
+.submit-button {
+  background-color: #2c3e50 !important;
+  color: #ffffff !important;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease-in-out;
+  min-width: 140px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.botao-adicionar button {
-  background-color: #2ecc71;
-  color: white;
+.submit-button:hover {
+  background-color: #1a2e40 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(44, 62, 80, 0.3);
 }
 
 .botao-adicionar button:hover {

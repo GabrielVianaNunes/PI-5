@@ -81,7 +81,8 @@ public class VeiculoService {
                 veiculo.getModelo(),
                 veiculo.getAno(),
                 veiculo.getTipo(),
-                veiculo.getCliente().getId()
+                veiculo.getCliente().getId(),
+                veiculo.getCliente().getNome()
         );
     }
 
