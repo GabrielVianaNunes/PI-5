@@ -40,9 +40,9 @@ export class PecaFormComponent {
 
   editMode: any;
 
-  // Método para voltar ao dashboard
+  // ✅ Método corrigido para voltar à lista de peças
   voltar() {
-    this.router.navigate(['/dashboard']); // ou ['/'] se for a raiz
+    this.router.navigate(['/estoque']);
   }
 
   onSubmit() {

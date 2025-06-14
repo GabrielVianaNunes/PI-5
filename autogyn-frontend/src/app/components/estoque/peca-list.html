@@ -1,13 +1,34 @@
-<!-- src/app/components/estoque/peca-list.html -->
-<div class="card">
-  <div class="table-header">
-    <h2 class="table-title">Peças em Estoque</h2>
-    <a pButton icon="pi pi-plus" label="Nova Peça" class="new-item-button"
-       routerLink="/estoque/novo"></a>
+<!-- src/app/components/estoque/peca-list.component.html -->
+<div class="cliente-list-container">
+  <h2 class="cliente-title">Peças em Estoque</h2>
+
+  <div class="nova-cliente-button">
+    <button
+      pButton
+      icon="pi pi-arrow-left"
+      label="Voltar para Home"
+      class="submit-button"
+      [routerLink]="['/dashboard']"
+    ></button>
+    <button
+      pButton
+      icon="pi pi-plus"
+      label="Nova Peça"
+      class="submit-button"
+      [routerLink]="['/estoque/novo']"
+    ></button>
   </div>
 
-  <p-table [value]="pecas" [paginator]="true" [rows]="10" responsiveLayout="scroll"
-           [rowsPerPageOptions]="[5,10,25,50]" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} itens">
+  <p-table
+    [value]="pecas"
+    [paginator]="true"
+    [rows]="10"
+    [responsiveLayout]="'scroll'"
+    [rowsPerPageOptions]="[5, 10, 25, 50]"
+    [showCurrentPageReport]="pecas.length > 0"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} itens"
+    class="p-datatable-sm p-datatable-gridlines p-datatable-striped cliente-tabela"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th>Nome</th>
@@ -17,20 +38,43 @@
         <th style="width: 120px;">Ações</th>
       </tr>
     </ng-template>
+
     <ng-template pTemplate="body" let-peca>
       <tr>
         <td>{{ peca.nome }}</td>
         <td>{{ peca.descricao }}</td>
-        <td [ngClass]="peca.quantidade < peca.estoqueMinimo ? 'quantity-low' : 'quantity-ok'">
+        <td
+          [ngClass]="
+            peca.quantidade < peca.estoqueMinimo
+              ? 'quantity-low'
+              : 'quantity-ok'
+          "
+        >
           {{ peca.quantidade }}
-          <span *ngIf="peca.quantidade < peca.estoqueMinimo" class="pi pi-exclamation-triangle" style="margin-left: 5px;"></span>
+          <span
+            *ngIf="peca.quantidade < peca.estoqueMinimo"
+            class="pi pi-exclamation-triangle"
+            style="margin-left: 5px;"
+          ></span>
         </td>
-        <td>{{ peca.valorUnitario | currency:'BRL' }}</td>
-        <td class="actions-cell">
-          <a pButton icon="pi pi-pencil" class="p-button-rounded p-button-warning p-button-sm"
-             routerLink="/estoque/editar/{{peca.id}}"></a>
-          <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-sm"
-                  (click)="excluir(peca.id)"></button>
+        <td>{{ peca.valorUnitario | currency: 'BRL' }}</td>
+        <td class="acoes">
+          <button
+            pButton
+            icon="pi pi-pencil"
+            class="p-button-text p-button-sm p-button-rounded p-button-info"
+            [routerLink]="['/estoque/editar', peca.id]"
+            pTooltip="Editar"
+            tooltipPosition="top"
+          ></button>
+          <button
+            pButton
+            icon="pi pi-trash"
+            class="p-button-text p-button-sm p-button-rounded p-button-danger"
+            (click)="excluir(peca.id)"
+            pTooltip="Excluir"
+            tooltipPosition="top"
+          ></button>
         </td>
       </tr>
     </ng-template>
