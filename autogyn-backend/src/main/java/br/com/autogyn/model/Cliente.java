@@ -1,6 +1,11 @@
 package br.com.autogyn.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -21,8 +26,8 @@ public class Cliente {
 
     @NotBlank(message = "Documento é obrigatório")
     @Pattern(
-        regexp = "(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})|(\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2})",
-        message = "CPF/CNPJ inválido"
+        regexp = "^\\d{11}$|^\\d{14}$",
+        message = "CPF ou CNPJ inválido"
     )
     private String documento; // Pode ser CPF ou CNPJ
 

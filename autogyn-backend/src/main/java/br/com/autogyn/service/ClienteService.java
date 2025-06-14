@@ -46,7 +46,7 @@ public class ClienteService {
 
         cliente.setNome(dto.getNome());
         cliente.setTipoCliente(dto.getTipoCliente());
-        cliente.setDocumento(dto.getDocumento());
+        cliente.setDocumento(dto.getDocumento().replaceAll("\\D", "")); // ← remove pontuações
         cliente.setTelefone(dto.getTelefone());
         cliente.setEndereco(dto.getEndereco());
 
@@ -66,7 +66,7 @@ public class ClienteService {
                 dto.getId(),
                 dto.getNome(),
                 dto.getTipoCliente(),
-                dto.getDocumento(),
+                dto.getDocumento().replaceAll("\\D", ""), // ← remove pontuações aqui também
                 dto.getTelefone(),
                 dto.getEndereco()
         );

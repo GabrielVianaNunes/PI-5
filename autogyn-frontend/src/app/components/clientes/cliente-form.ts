@@ -74,6 +74,9 @@ export class ClienteFormComponent implements OnInit {
 
   salvar() {
     if (this.clienteForm.valid) {
+      // ✅ Log dos dados enviados
+      console.log('Dados enviados ao backend:', this.clienteForm.value);
+
       const acao = this.clienteId
         ? this.clienteService.update(this.clienteId, this.clienteForm.value)
         : this.clienteService.create(this.clienteForm.value);
@@ -104,6 +107,7 @@ export class ClienteFormComponent implements OnInit {
       this.clienteForm.markAllAsTouched();
     }
   }
+
 
   cancelar() {
     this.router.navigate(['/clientes']);

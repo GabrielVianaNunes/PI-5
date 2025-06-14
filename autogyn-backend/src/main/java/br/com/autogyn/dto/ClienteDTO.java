@@ -15,7 +15,7 @@ public class ClienteDTO {
 
     @NotBlank(message = "Documento é obrigatório")
     @Pattern(
-        regexp = "(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})|(\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2})",
+        regexp = "^\\d{11}$|^\\d{14}$|^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$|^\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}$",
         message = "CPF ou CNPJ inválido"
     )
     private String documento;
