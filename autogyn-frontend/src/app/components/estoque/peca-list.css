@@ -1,117 +1,67 @@
-/* src/app/components/estoque/peca-list.css */
-/* src/app/components/estoque/peca-list.css */
-.new-item-button {
+/* src/app/components/estoque/peca-list.component.css */
+
+.cliente-list-container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 2rem;
   background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  color: #4a5568;
-  padding: 0.5rem 1.25rem;
-  border-radius: 6px;
-  font-weight: 500;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.cliente-title {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.nova-cliente-button {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.submit-button {
+  background-color: #2c3e50 !important;
+  color: #ffffff !important;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
   transition: all 0.2s ease;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  text-decoration: none !important;
-  display: inline-flex;
-  align-items: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  font-size: 0.95rem;
+  min-width: 140px;
+}
+
+.submit-button:hover {
+  background-color: #1a2e40 !important;
+  box-shadow: 0 6px 15px rgba(44, 62, 80, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Estilo da tabela */
+::ng-deep .cliente-tabela .p-datatable-thead > tr > th {
+  background-color: #f5f7fa;
+  color: #2c3e50;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #dfe3e8;
+}
+
+::ng-deep .cliente-tabela .p-datatable-tbody > tr > td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.acoes {
+  display: flex;
   gap: 0.5rem;
 }
 
-.new-item-button:hover {
-  background-color: #f7fafc;
-  border-color: #cbd5e0;
-  color: #2d3748;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
-}
-
-.new-item-button:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-/* Mantenha o restante do seu CSS existente */
-
-:host {
-  display: block;
-  padding: 2rem;
-}
-
-.card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-}
-
-.table-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem;
-  border-bottom: 1px solid #eaeef2;
-}
-
-.table-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #2c3e50;
-  margin: 0;
-}
-
-.new-item-button {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  color: #4a5568;
-  padding: 0.5rem 1.25rem;
-  border-radius: 6px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-}
-
-.new-item-button:hover {
-  background-color: #f7fafc !important;
-  border-color: #cbd5e0 !important;
-  color: #2d3748 !important;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
-}
-
-.new-item-button:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-:host ::ng-deep .p-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-:host ::ng-deep .p-table thead th {
-  background: #f8fafc;
-  color: #4a5568;
-  font-weight: 600;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
-  text-align: left;
-}
-
-:host ::ng-deep .p-table tbody td {
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid #edf2f7;
-  color: #4a5568;
-  vertical-align: middle;
-}
-
-:host ::ng-deep .p-table tbody tr:hover td {
-  background-color: #f8fafc;
-}
-
-.actions-cell {
-  display: flex;
-  gap: 0.75rem;
-}
-
+/* Indicadores de estoque */
 .quantity-low {
   color: #e53e3e;
   font-weight: 600;
@@ -121,46 +71,12 @@
   color: #38a169;
 }
 
-:host ::ng-deep .p-paginator {
-  padding: 1rem 1.5rem;
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
+/* Zebra stripes e gridlines já estão herdados pelas classes da tabela */
+::ng-deep .p-datatable-striped .p-datatable-tbody > tr:nth-child(even) > td {
+  background-color: #fafbfc;
 }
 
-@media (max-width: 768px) {
-  .table-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  
-  :host ::ng-deep .p-table thead {
-    display: none;
-  }
-  
-  :host ::ng-deep .p-table tbody tr {
-    display: block;
-    margin-bottom: 1rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-  }
-  
-  :host ::ng-deep .p-table tbody td {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid #e2e8f0;
-  }
-  
-  :host ::ng-deep .p-table tbody td:before {
-    content: attr(data-label);
-    font-weight: 600;
-    margin-right: 1rem;
-    color: #4a5568;
-  }
-  
-  .actions-cell {
-    justify-content: flex-end;
-  }
+::ng-deep .p-datatable-gridlines .p-datatable-tbody > tr > td,
+::ng-deep .p-datatable-gridlines .p-datatable-thead > tr > th {
+  border: 1px solid #eaeef2;
 }

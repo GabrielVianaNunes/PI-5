@@ -12,4 +12,5 @@ export interface Veiculo {
   tipo: string;
   clienteId: number;
   cliente?: Cliente; 
+  clienteNome?: string;
 }

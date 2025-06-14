@@ -1,5 +1,5 @@
 .form-container {
-  max-width: 600px;
+  max-width: 700px;
   margin: 3rem auto;
   padding: 2rem;
   background: #ffffff;
@@ -35,10 +35,6 @@ input,
   font-size: 0.95rem;
 }
 
-.p-dropdown-label {
-  padding: 0.6rem 0.8rem;
-}
-
 input:focus {
   outline: none;
   border-color: #409eff;
@@ -58,51 +54,26 @@ input:focus {
   margin-top: 0.25rem;
 }
 
-.form-buttons {
+/* Botões padronizados */
+.button-group {
   display: flex;
   justify-content: flex-end;
-  flex-wrap: wrap;
   gap: 1rem;
   margin-top: 2.5rem;
 }
 
-.form-buttons button {
-  font-size: 0.95rem;
-  font-weight: 500;
-  padding: 0.65rem 1.5rem;
-  border-radius: 10px;
-  min-width: 120px;
-  color: #fff;
-  transition: all 0.2s ease-in-out;
+.submit-button {
+  background-color: #2c3e50 !important;
+  color: #ffffff !important;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.p-button-success {
-  background-color: #28a745;
-  border: none;
-}
-
-.p-button-success:hover {
-  background-color: #218838;
-  transform: translateY(-1px);
-}
-
-.p-button-secondary {
-  background-color: #6c757d;
-  border: none;
-}
-
-.p-button-secondary:hover {
-  background-color: #5a6268;
-  transform: translateY(-1px);
-}
-
-.p-button-warning {
-  background-color: #ffc107;
-  border: none;
-  color: #212529;
-}
-
-.p-button-warning:hover {
-  background-color: #e0a800;
-  transform: translateY(-1px);
+.submit-button:hover {
+  background-color: #1a2e40 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(44, 62, 80, 0.3);
 }
