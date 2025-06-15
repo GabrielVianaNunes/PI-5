@@ -59,22 +59,8 @@
         </td>
         <td>{{ peca.valorUnitario | currency: 'BRL' }}</td>
         <td class="acoes">
-          <button
-            pButton
-            icon="pi pi-pencil"
-            class="p-button-text p-button-sm p-button-rounded p-button-info"
-            [routerLink]="['/estoque/editar', peca.id]"
-            pTooltip="Editar"
-            tooltipPosition="top"
-          ></button>
-          <button
-            pButton
-            icon="pi pi-trash"
-            class="p-button-text p-button-sm p-button-rounded p-button-danger"
-            (click)="excluir(peca.id)"
-            pTooltip="Excluir"
-            tooltipPosition="top"
-          ></button>
+          <button class="p-button p-button-sm p-button-info">✏️ </button>
+          <button class="p-button p-button-sm p-button-danger">🗑️ </button>
         </td>
       </tr>
     </ng-template>

@@ -1,9 +1,10 @@
 <div class="form-container">
   <h2>Registrar Pagamento</h2>
 
-  <form [formGroup]="pagamentoForm" (ngSubmit)="onSubmit()" class="formulario">
+  <form [formGroup]="pagamentoForm" (ngSubmit)="onSubmit()" class="p-fluid">
+
     <!-- Ordem de Serviço -->
-    <div class="form-group" [ngClass]="{ 'invalid': isInvalid('ordemDeServicoId') }">
+    <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('ordemDeServicoId') }">
       <label for="ordemDeServicoId">Ordem de Serviço</label>
       <input
         type="number"
@@ -12,13 +13,11 @@
         pInputText
         placeholder="Informe o ID da OS"
       />
-      <div class="erro-campo" *ngIf="isInvalid('ordemDeServicoId')">
-        Campo obrigatório.
-      </div>
+      <div class="campo-erro" *ngIf="isInvalid('ordemDeServicoId')">Campo obrigatório.</div>
     </div>
 
     <!-- Valor Pago -->
-    <div class="form-group" [ngClass]="{ 'invalid': isInvalid('valorPago') }">
+    <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('valorPago') }">
       <label for="valorPago">Valor Pago</label>
       <p-inputNumber
         inputId="valorPago"
@@ -26,45 +25,49 @@
         mode="currency"
         currency="BRL"
         locale="pt-BR"
-        [inputStyle]="{ width: '100%' }"
       ></p-inputNumber>
-      <div class="erro-campo" *ngIf="isInvalid('valorPago')">
-        Informe um valor válido.
-      </div>
+      <div class="campo-erro" *ngIf="isInvalid('valorPago')">Informe um valor válido.</div>
     </div>
 
     <!-- Forma de Pagamento -->
-    <div class="form-group" [ngClass]="{ 'invalid': isInvalid('formaPagamento') }">
+    <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('formaPagamento') }">
       <label>Forma de Pagamento</label>
       <button type="button" pButton class="select-modal" (click)="abrirModal('formaPagamento')">
         {{ pagamentoForm.value.formaPagamento || 'Selecione' }}
       </button>
-      <div class="erro-campo" *ngIf="isInvalid('formaPagamento')">
-        Selecione uma opção.
-      </div>
+      <div class="campo-erro" *ngIf="isInvalid('formaPagamento')">Selecione uma opção.</div>
     </div>
 
     <!-- Status -->
-    <div class="form-group" [ngClass]="{ 'invalid': isInvalid('status') }">
+    <div class="p-field" [ngClass]="{ 'invalid-field': isInvalid('status') }">
       <label>Status</label>
       <button type="button" pButton class="select-modal" (click)="abrirModal('status')">
         {{ pagamentoForm.value.status || 'Selecione' }}
       </button>
-      <div class="erro-campo" *ngIf="isInvalid('status')">
-        Campo obrigatório.
-      </div>
+      <div class="campo-erro" *ngIf="isInvalid('status')">Campo obrigatório.</div>
     </div>
 
-    <!-- Botão -->
-    <button
-      type="submit"
-      pButton
-      class="botao-submit"
-      [disabled]="pagamentoForm.invalid || carregando"
-    >
-      <i *ngIf="carregando" class="pi pi-spin pi-spinner" style="margin-right: 0.5rem"></i>
-      {{ carregando ? 'Registrando...' : 'Registrar Pagamento' }}
-    </button>
+    <!-- Botões -->
+    <div class="button-group">
+      <button
+        type="submit"
+        pButton
+        class="submit-button"
+        [disabled]="pagamentoForm.invalid || carregando"
+      >
+        <i *ngIf="carregando" class="pi pi-spin pi-spinner" style="margin-right: 0.5rem"></i>
+        {{ carregando ? 'Registrando...' : 'Registrar Pagamento' }}
+      </button>
+
+      <button
+        type="button"
+        pButton
+        class="submit-button"
+        icon="pi pi-arrow-left"
+        label="Voltar para Lista"
+        (click)="voltar()"
+      ></button>
+    </div>
   </form>
 
   <!-- MODAL DE SELEÇÃO -->

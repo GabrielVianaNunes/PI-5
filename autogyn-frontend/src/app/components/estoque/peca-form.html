@@ -20,6 +20,9 @@
       <div class="campo-erro" *ngIf="pecaForm.get('codigo')?.invalid && pecaForm.get('codigo')?.touched">
         Código é obrigatório.
       </div>
+      <small class="invalid-feedback" *ngIf="pecaForm.get('codigo')?.hasError('pattern') && pecaForm.get('codigo')?.touched">
+        Código inválido (Ex: P123B)
+      </small>
     </div>
 
     <!-- Descrição -->
@@ -53,12 +56,6 @@
       <div class="campo-erro" *ngIf="pecaForm.get('estoqueMinimo')?.invalid && pecaForm.get('estoqueMinimo')?.touched">
         Estoque mínimo inválido.
       </div>
-    </div>
-
-    <!-- Localização -->
-    <div class="p-field">
-      <label for="localizacao">Localização</label>
-      <input id="localizacao" type="text" pInputText formControlName="localizacao" placeholder="Ex: Prateleira A3" />
     </div>
 
     <!-- Botões -->

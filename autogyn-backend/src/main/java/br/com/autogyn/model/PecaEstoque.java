@@ -39,6 +39,10 @@ public class PecaEstoque {
     @Column(name = "codigo", unique = true)
     private String codigo;
 
+    // restringindo a entrada a uma linguagem reconhecida por este Autômato Finito Determinístico (AFD):
+    //Σ = {P, -, 0–9, A–Z}
+    //q0 --P--> q1 --[-]?--> q2 --[0-9]{3,4}--> q3 --[A-Z]{0,2}--> qf
+
     @Column(name = "estoque_minimo")
     private Integer estoqueMinimo;
 
