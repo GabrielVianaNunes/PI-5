@@ -50,27 +50,37 @@ h2 {
   background-color: #eef2f7;
 }
 
+/* Estilo para ações (Editar / Excluir) */
 .acoes {
   white-space: nowrap;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
 }
 
-.btn-acao {
-  margin: 0 0.25rem;
-  border-radius: 6px;
-  padding: 0.4rem 0.6rem;
-  border: none;
+.acoes .p-button {
+  min-width: 100px;
+  font-weight: 500;
+  padding: 0.5rem 0.9rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
 }
 
-.btn-acao.editar {
-  background-color: #3498db;
-  color: white;
+/* Hover personalizado para editar */
+.acoes .p-button-info:hover {
+  background-color: #2684ff !important;
+  color: #fff !important;
+  border-color: #2684ff !important;
 }
 
-.btn-acao.excluir {
-  background-color: #e74c3c;
-  color: white;
+/* Hover personalizado para excluir */
+.acoes .p-button-danger:hover {
+  background-color: #e53935 !important;
+  color: #fff !important;
+  border-color: #e53935 !important;
 }
 
+/* Rodapé inferior (botão voltar) */
 .acoes-inferiores {
   display: flex;
   justify-content: flex-start;
@@ -79,7 +89,7 @@ h2 {
   flex-wrap: wrap;
 }
 
-/* Padronização com o botão de salvar/voltar do formulário */
+/* ✅ Estilo padronizado aplicado a todos os botões de ação e navegação */
 .submit-button {
   background-color: #2c3e50 !important;
   color: #ffffff !important;
@@ -88,6 +98,8 @@ h2 {
   padding: 0.75rem 1.25rem;
   transition: all 0.2s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  font-size: 0.95rem;
+  min-width: 160px;
 }
 
 .submit-button:hover {

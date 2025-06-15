@@ -1,6 +1,13 @@
 // src/app/app.config.ts
 
-import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+  LOCALE_ID
+} from '@angular/core';
+
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 
@@ -16,7 +23,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { ToastModule } from 'primeng/toast';
 
-import { MessageService } from 'primeng/api'; // ✅ Importar
+import { MessageService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -35,6 +42,9 @@ export const appConfig: ApplicationConfig = {
       CalendarModule,
       ToastModule
     ),
-    MessageService // ✅ Adicionado aqui
+    MessageService,
+
+    // ✅ Adiciona locale pt-BR globalmente
+    { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]
 };

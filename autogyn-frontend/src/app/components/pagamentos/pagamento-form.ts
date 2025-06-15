@@ -83,6 +83,10 @@ export class PagamentoFormComponent {
     }
   }
 
+  voltar() {
+    this.router.navigate(['/pagamentos']);
+  }
+
   isInvalid(campo: string): boolean {
     const control = this.pagamentoForm.get(campo);
     return !!(control && control.invalid && (control.dirty || control.touched));
