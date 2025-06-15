@@ -48,16 +48,18 @@
           ></button>
         </td>
       </tr>
-      <div class="acoes-inferiores">
-          <button
-            pButton
-            type="button"
-            label="Voltar para Home"
-            icon="pi pi-home"
-            class="botao-voltar-home"
-            [routerLink]="['/home']"
-          ></button>
-        </div>
     </tbody>
   </table>
+
+  <!-- ✅ Botão fora da tabela, com estilo correto -->
+  <div class="acoes-inferiores">
+    <button
+      pButton
+      type="button"
+      label="Voltar para Home"
+      icon="pi pi-home"
+      class="submit-button"
+      [routerLink]="['/home']"
+    ></button>
+  </div>
 </div>
