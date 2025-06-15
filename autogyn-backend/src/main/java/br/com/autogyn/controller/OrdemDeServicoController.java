@@ -39,8 +39,9 @@ public class OrdemDeServicoController {
     }
 
     @PostMapping
-    public ResponseEntity<OrdemDeServico> criar(@Valid @RequestBody OrdemDeServicoDTO dto) {
-        return ResponseEntity.ok(ordemService.criar(dto));
+    public ResponseEntity<String> criar(@Valid @RequestBody OrdemDeServicoDTO dto) {
+        ordemService.criar(dto);
+        return ResponseEntity.ok("Ordem de serviço criada com sucesso!");
     }
 
     @DeleteMapping("/{id}")
