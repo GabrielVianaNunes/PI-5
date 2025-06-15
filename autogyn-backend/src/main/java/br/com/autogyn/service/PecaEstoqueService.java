@@ -61,4 +61,9 @@ public class PecaEstoqueService {
         peca.setQuantidade(novaQuantidade);
         pecaEstoqueRepository.save(peca);
     }
+
+    public List<PecaEstoque> listarDisponiveis() {
+        return pecaEstoqueRepository.findByQuantidadeGreaterThan(0);
+    }
+
 }

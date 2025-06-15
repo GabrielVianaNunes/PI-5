@@ -12,6 +12,7 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "pecas_estoque")
@@ -35,7 +36,9 @@ public class PecaEstoque {
     private BigDecimal valorUnitario;
 
     @Column(name = "codigo", unique = true)
-    private String codigo; // Código interno da peça
+    @Pattern(regexp = "^P-\\d{4}$", message = "O código deve seguir o formato P-0000")
+    @NotBlank(message = "O código da peça é obrigatório")
+    private String codigo;
 
     @Column(name = "estoque_minimo")
     private Integer estoqueMinimo;

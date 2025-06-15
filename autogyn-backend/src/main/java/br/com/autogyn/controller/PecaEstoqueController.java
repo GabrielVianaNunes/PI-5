@@ -61,4 +61,11 @@ public class PecaEstoqueController {
         pecaEstoqueService.ajustarQuantidade(id, quantidadeDelta);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/disponiveis")
+    public ResponseEntity<List<PecaEstoque>> listarDisponiveis() {
+        List<PecaEstoque> pecas = pecaEstoqueService.listarDisponiveis();
+        return ResponseEntity.ok(pecas);
+    }
+
 }

@@ -19,6 +19,18 @@
           Nome é obrigatório
         </small>
       </div>
+
+      <div class="form-field">
+        <label for="codigo">Código *</label>
+        <input pInputText id="codigo" formControlName="codigo"
+              [ngClass]="{'p-invalid': pecaForm.get('codigo')?.invalid && pecaForm.get('codigo')?.touched}" />
+        <small class="invalid-feedback" *ngIf="pecaForm.get('codigo')?.errors?.['required'] && pecaForm.get('codigo')?.touched">
+          Código é obrigatório
+        </small>
+        <small class="invalid-feedback" *ngIf="pecaForm.get('codigo')?.errors?.['pattern'] && pecaForm.get('codigo')?.touched">
+          Código inválido. Use o formato P-0000
+        </small>
+      </div>
       
       <div class="form-field">
         <label for="descricao">Descrição</label>

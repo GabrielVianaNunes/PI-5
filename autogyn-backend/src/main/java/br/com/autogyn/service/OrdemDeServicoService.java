@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import br.com.autogyn.dto.ItemOrdemServicoDTO;
@@ -16,6 +17,7 @@ import br.com.autogyn.repository.ItemOrdemServicoRepository;
 import br.com.autogyn.repository.OrdemDeServicoRepository;
 import br.com.autogyn.repository.PecaEstoqueRepository;
 import br.com.autogyn.repository.VeiculoRepository;
+import br.com.autogyn.strategy.CalculoValorStrategy;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -25,16 +27,19 @@ public class OrdemDeServicoService {
     private final ItemOrdemServicoRepository itemRepository;
     private final VeiculoRepository veiculoRepository;
     private final PecaEstoqueRepository pecaEstoqueRepository;
+    private final CalculoValorStrategy calculoValorStrategy;
 
     public OrdemDeServicoService(
             OrdemDeServicoRepository ordemRepository,
             ItemOrdemServicoRepository itemRepository,
             VeiculoRepository veiculoRepository,
-            PecaEstoqueRepository pecaEstoqueRepository) {
+            PecaEstoqueRepository pecaEstoqueRepository,
+            @Qualifier("fidelidade") CalculoValorStrategy calculoValorStrategy) {
         this.ordemRepository = ordemRepository;
         this.itemRepository = itemRepository;
         this.veiculoRepository = veiculoRepository;
         this.pecaEstoqueRepository = pecaEstoqueRepository;
+        this.calculoValorStrategy = calculoValorStrategy;
     }
 
     public List<OrdemDeServico> listarTodas() {
@@ -48,16 +53,16 @@ public class OrdemDeServicoService {
 
     public OrdemDeServico criar(OrdemDeServicoDTO dto) {
         Veiculo veiculo = veiculoRepository.findById(dto.getVeiculoId())
-                .orElseThrow(() -> new EntityNotFoundException("Veículo não encontrado com ID: " + dto.getVeiculoId()));
+            .orElseThrow(() -> new EntityNotFoundException("Veículo não encontrado com ID: " + dto.getVeiculoId()));
 
         OrdemDeServico ordem = new OrdemDeServico();
         ordem.setVeiculo(veiculo);
+        ordem.setCliente(veiculo.getCliente());
         ordem.setDataAbertura(dto.getDataAbertura().atStartOfDay());
         ordem.setDataFechamento(dto.getDataFechamento().atStartOfDay());
         ordem.setStatus(dto.getStatus());
 
         List<ItemOrdemServico> itens = new ArrayList<>();
-        BigDecimal valorTotal = BigDecimal.ZERO;
 
         for (ItemOrdemServicoDTO itemDTO : dto.getItens()) {
             ItemOrdemServico item = new ItemOrdemServico();
@@ -68,7 +73,6 @@ public class OrdemDeServicoService {
 
             BigDecimal valorUnitario;
 
-            // Integração com o estoque
             if ("PECA".equalsIgnoreCase(itemDTO.getTipo())) {
                 if (itemDTO.getPecaEstoqueId() == null) {
                     throw new IllegalArgumentException("ID da peça em estoque é obrigatório para itens do tipo PECA.");
@@ -81,7 +85,6 @@ public class OrdemDeServicoService {
                     throw new IllegalArgumentException("Estoque insuficiente para a peça: " + peca.getNome());
                 }
 
-                // Atualiza quantidade no estoque
                 peca.setQuantidade(peca.getQuantidade() - itemDTO.getQuantidade());
                 pecaEstoqueRepository.save(peca);
 
@@ -94,11 +97,12 @@ public class OrdemDeServicoService {
 
             BigDecimal subtotal = valorUnitario.multiply(BigDecimal.valueOf(item.getQuantidade().longValue()));
             item.setValorTotal(subtotal);
-            valorTotal = valorTotal.add(subtotal);
 
             itens.add(item);
         }
 
+        // Aplicação do Strategy para cálculo de valor total
+        BigDecimal valorTotal = calculoValorStrategy.calcularValorTotal(itens);
         ordem.setValorTotal(valorTotal);
         ordem.setItens(itens);
 

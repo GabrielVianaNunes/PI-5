@@ -10,19 +10,13 @@
         optionLabel="modelo"
         optionValue="id"
         formControlName="veiculoId"
-        placeholder="Selecione o veículo"
-      ></p-dropdown>
+        placeholder="Selecione o veículo">
+      </p-dropdown>
     </div>
 
-    <div class="p-field">
-      <label for="clienteId">Cliente</label>
-      <p-dropdown
-        [options]="clientes"
-        optionLabel="nome"
-        optionValue="id"
-        formControlName="clienteId"
-        placeholder="Selecione o cliente"
-      ></p-dropdown>
+    <div class="p-field" *ngIf="clienteSelecionado">
+      <label>Cliente</label>
+      <input type="text" [value]="clienteSelecionado" pInputText readonly />
     </div>
 
     <div class="p-field-group">
@@ -44,7 +38,7 @@
 
     <div class="p-field">
       <label for="observacoes">Observações</label>
-      <textarea id="observacoes" rows="3" pInputTextarea formControlName="observacoes"></textarea>
+      <textarea id="observacoes" rows="3" pTextarea formControlName="observacoes"></textarea>
     </div>
 
     <div class="items-section">
@@ -59,6 +53,7 @@
       ></button>
 
       <div *ngFor="let item of itens.controls; let i = index" [formGroupName]="i" class="item-card">
+
         <div class="p-field">
           <label>Descrição</label>
           <input pInputText formControlName="descricao" />
@@ -71,7 +66,11 @@
 
         <div class="p-field">
           <label>Quantidade</label>
-          <input type="number" pInputText formControlName="quantidade" />
+          <input 
+            type="number" 
+            pInputText 
+            formControlName="quantidade" 
+            [attr.max]="getQuantidadeMaxima(i)" />
         </div>
 
         <div class="p-field">
@@ -79,11 +78,27 @@
           <input type="number" pInputText formControlName="valorUnitario" />
         </div>
 
+        <div class="p-field" *ngIf="item.get('tipo')?.value === 'PECA'">
+          <label for="pecaEstoqueId">Peça</label>
+          <p-dropdown
+            [options]="pecas"
+            optionLabel="nome"
+            optionValue="id"
+            formControlName="pecaEstoqueId"
+            placeholder="Selecione a peça"
+            (onChange)="onPecaSelecionada(i)">
+          </p-dropdown>
+        </div>
+
         <button type="button" pButton icon="pi pi-trash" class="p-button-danger" (click)="removerItem(i)"></button>
       </div>
     </div>
 
-    <!-- Botões lado a lado -->
+    <div class="p-field">
+      <label>Valor Total da Ordem</label>
+      <input pInputText [value]="valorTotal | currency:'BRL'" readonly />
+    </div>
+
     <div class="button-group">
       <button pButton type="submit" label="Salvar Ordem de Serviço" class="submit-button"></button>
       <button type="button" pButton icon="pi pi-arrow-left" label="Voltar para Lista" class="submit-button" (click)="voltarParaLista()"></button>

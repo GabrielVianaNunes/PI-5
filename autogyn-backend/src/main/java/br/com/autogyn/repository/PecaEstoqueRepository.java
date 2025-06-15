@@ -1,5 +1,7 @@
 package br.com.autogyn.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +15,7 @@ public interface PecaEstoqueRepository extends JpaRepository<PecaEstoque, Long> 
 
     // Consulta opcional: verificar se existe uma peça com determinado código
     boolean existsByCodigo(String codigo);
+
+    List<PecaEstoque> findByQuantidadeGreaterThan(int quantidade);
+
 }

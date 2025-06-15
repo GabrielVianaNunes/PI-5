@@ -28,7 +28,10 @@ export class OrdemListComponent {
 
   carregarOrdens() {
     this.ordemService.getAll().subscribe({
-      next: (dados) => this.ordens = dados,
+      next: (dados) => {
+        console.log('Ordens recebidas:', dados);
+        this.ordens = dados;
+      },
       error: () => this.toast.erro('Erro ao buscar ordens de serviço')
     });
   }

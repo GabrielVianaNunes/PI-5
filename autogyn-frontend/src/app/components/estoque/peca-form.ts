@@ -30,7 +30,10 @@ export class PecaFormComponent {
 
   pecaForm: FormGroup = this.fb.group({
     nome: ['', Validators.required],
-    codigo: ['', Validators.required],
+    codigo: ['', [
+      Validators.required,
+      Validators.pattern(/^P-\d{4}$/)  // Validação formal via regex
+    ]],
     descricao: [''],
     quantidade: [0, [Validators.required, Validators.min(0)]],
     valorUnitario: [0, [Validators.required, Validators.min(0)]],
