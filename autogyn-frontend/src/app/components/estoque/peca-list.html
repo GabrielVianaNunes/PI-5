@@ -5,13 +5,6 @@
   <div class="nova-cliente-button">
     <button
       pButton
-      icon="pi pi-arrow-left"
-      label="Voltar para Home"
-      class="submit-button"
-      [routerLink]="['/dashboard']"
-    ></button>
-    <button
-      pButton
       icon="pi pi-plus"
       label="Nova Peça"
       class="submit-button"
@@ -35,7 +28,7 @@
         <th>Descrição</th>
         <th>Quantidade</th>
         <th>Preço Unitário</th>
-        <th style="text-align: center; width: 130px;">Ações</th>
+        <th style="text-align: center; width: 160px;">Ações</th>
       </tr>
     </ng-template>
 
@@ -59,11 +52,35 @@
         </td>
         <td>{{ peca.valorUnitario | currency: 'BRL' }}</td>
         <td class="acoes">
-          <button class="p-button p-button-sm p-button-info">✏️ </button>
-          <button class="p-button p-button-sm p-button-danger">🗑️ </button>
+          <button
+            pButton
+            icon="pi pi-pencil"
+            label="Editar"
+            class="p-button-sm p-button-rounded p-button-info"
+            [routerLink]="['/estoque/editar', peca.id]"
+          ></button>
+
+          <button
+            pButton
+            icon="pi pi-trash"
+            label="Excluir"
+            class="p-button-sm p-button-rounded p-button-danger"
+            (click)="excluir(peca.id)"
+            *ngIf="peca.id"
+          ></button>
         </td>
       </tr>
     </ng-template>
-
   </p-table>
+
+  <div class="acoes-inferiores">
+    <button
+      pButton
+      type="button"
+      label="Voltar para Home"
+      icon="pi pi-home"
+      class="submit-button"
+      [routerLink]="['/dashboard']"
+    ></button>
+  </div>
 </div>
