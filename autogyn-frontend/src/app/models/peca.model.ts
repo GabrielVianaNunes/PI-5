@@ -1,9 +1,9 @@
 export interface PecaEstoque {
-  id?: number;
+  id: number;
   nome: string;
-  quantidade: number;
   valorUnitario: number;
-  codigo?: string;
+  quantidade: number;
+  codigo: string;
   estoqueMinimo?: number;
   descricao?: string;
 }

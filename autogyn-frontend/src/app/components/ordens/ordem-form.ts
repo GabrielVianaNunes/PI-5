@@ -107,7 +107,7 @@ export class OrdemFormComponent {
   getQuantidadeMaxima(index: number): number {
     const pecaId = this.itens.at(index).get('pecaEstoqueId')?.value;
     const peca = this.pecas.find(p => p.id === pecaId);
-    return peca?.quantidadeDisponivel ?? 1000;
+    return peca?.quantidade ?? 1000;
   }
 
   get valorTotal(): number {

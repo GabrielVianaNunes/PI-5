@@ -66,11 +66,11 @@
 
         <div class="p-field">
           <label>Quantidade</label>
-          <input 
-            type="number" 
-            pInputText 
-            formControlName="quantidade" 
-            [attr.max]="getQuantidadeMaxima(i)" />
+          <input type="number"
+            formControlName="quantidade"
+            [max]="getQuantidadeMaxima(i)"
+            min="1"
+            class="form-control" />
         </div>
 
         <div class="p-field">
