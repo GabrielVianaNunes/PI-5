@@ -18,10 +18,11 @@
 
 .nova-cliente-button {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-bottom: 1rem;
 }
 
+/* Botões padrão do projeto */
 .submit-button {
   background-color: #2c3e50 !important;
   color: #ffffff !important;
@@ -31,7 +32,7 @@
   transition: all 0.2s ease;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   font-size: 0.95rem;
-  min-width: 140px;
+  min-width: 160px;
 }
 
 .submit-button:hover {
@@ -40,7 +41,7 @@
   transform: translateY(-2px);
 }
 
-/* Estilo da tabela */
+/* Tabela */
 ::ng-deep .cliente-tabela .p-datatable-thead > tr > th {
   background-color: #f5f7fa;
   color: #2c3e50;
@@ -56,9 +57,33 @@
   color: #444;
 }
 
+/* Ações */
 .acoes {
   display: flex;
   gap: 0.5rem;
+  justify-content: center;
+}
+
+.acoes .p-button {
+  min-width: 100px;
+  font-weight: 500;
+  padding: 0.5rem 0.9rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+}
+
+/* Hover personalizado para editar */
+.acoes .p-button-info:hover {
+  background-color: #2684ff !important;
+  color: #fff !important;
+  border-color: #2684ff !important;
+}
+
+/* Hover personalizado para excluir */
+.acoes .p-button-danger:hover {
+  background-color: #e53935 !important;
+  color: #fff !important;
+  border-color: #e53935 !important;
 }
 
 /* Indicadores de estoque */
@@ -71,7 +96,7 @@
   color: #38a169;
 }
 
-/* Zebra stripes e gridlines já estão herdados pelas classes da tabela */
+/* Zebra stripes e gridlines já estão herdados */
 ::ng-deep .p-datatable-striped .p-datatable-tbody > tr:nth-child(even) > td {
   background-color: #fafbfc;
 }
@@ -79,4 +104,13 @@
 ::ng-deep .p-datatable-gridlines .p-datatable-tbody > tr > td,
 ::ng-deep .p-datatable-gridlines .p-datatable-thead > tr > th {
   border: 1px solid #eaeef2;
+}
+
+/* Rodapé inferior com botão Voltar */
+.acoes-inferiores {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
 }

@@ -82,6 +82,9 @@
               }
             ],
             "styles": [
+              "primeicons/primeicons.css",
+              "primeng/resources/themes/lara-light-blue/theme.css",
+              "primeng/resources/primeng.min.css",
               "src/styles.css"
             ]
           }
