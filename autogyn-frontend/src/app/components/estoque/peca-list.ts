@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip'; // ✅ Importar
 
 import { PecaService } from 'src/app/services/peca.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -13,7 +14,13 @@ import { PecaEstoque } from 'src/app/models/peca.model';
 @Component({
   selector: 'app-peca-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, TableModule, ButtonModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    TableModule,
+    ButtonModule,
+    TooltipModule // ✅ Adicionar aqui
+  ],
   templateUrl: './peca-list.html',
   styleUrls: ['./peca-list.css']
 })

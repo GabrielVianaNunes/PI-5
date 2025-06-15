@@ -35,9 +35,9 @@ public class PecaEstoque {
     @Column(name = "valor_unitario", precision = 10, scale = 2)
     private BigDecimal valorUnitario;
 
-    @Column(name = "codigo", unique = true)
-    @Pattern(regexp = "^P-\\d{4}$", message = "O código deve seguir o formato P-0000")
     @NotBlank(message = "O código da peça é obrigatório")
+    @Pattern(regexp = "^P-\\d{4}$", message = "O código deve seguir o formato P-0000")
+    @Column(name = "codigo", unique = true)
     private String codigo;
 
     @Column(name = "estoque_minimo")

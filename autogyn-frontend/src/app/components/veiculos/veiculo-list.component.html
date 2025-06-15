@@ -1,13 +1,8 @@
 <div class="card-tabela">
   <div class="cabecalho-tabela">
     <h2>Lista de Veículos</h2>
-    <button
-      pButton
-      label="Novo Veículo"
-      icon="pi pi-plus"
-      [routerLink]="['/veiculos/novo']"
-      class="submit-button"
-    ></button>
+    <button pButton label="Novo Veículo" icon="pi pi-plus" [routerLink]="['/veiculos/novo']"
+      class="submit-button"></button>
   </div>
 
   <table class="tabela-estilizada">
@@ -33,31 +28,20 @@
         <td>{{ veiculo.tipo }}</td>
         <td>{{ veiculo.clienteNome }}</td>
         <td class="acoes">
-          <button
-            pButton
-            icon="pi pi-pencil"
-            class="btn-acao editar"
-            [routerLink]="['/veiculos/editar', veiculo.id]"
-          ></button>
-          <button
-            pButton
-            icon="pi pi-trash"
-            class="btn-acao excluir"
-            *ngIf="veiculo.id"
-            (click)="excluir(veiculo.id)"
-          ></button>
+          <button pButton icon="pi pi-pencil" label="Editar" iconPos="left"
+            class="p-button-sm p-button-rounded p-button-outlined p-button-info"
+            [routerLink]="['/veiculos/editar', veiculo.id]" pTooltip="Editar veículo" tooltipPosition="top"></button>
+
+          <button pButton icon="pi pi-trash" label="Excluir" iconPos="left"
+            class="p-button-sm p-button-rounded p-button-outlined p-button-danger" *ngIf="veiculo.id"
+            (click)="excluir(veiculo.id)" pTooltip="Excluir veículo" tooltipPosition="top"></button>
         </td>
       </tr>
-      <div class="acoes-inferiores">
-          <button
-            pButton
-            type="button"
-            label="Voltar para Home"
-            icon="pi pi-home"
-            class="botao-voltar-home"
-            [routerLink]="['/home']"
-          ></button>
-        </div>
     </tbody>
   </table>
+
+  <div class="acoes-inferiores">
+    <button pButton type="button" label="Voltar para Home" icon="pi pi-home" class="submit-button"
+      [routerLink]="['/home']"></button>
+  </div>
 </div>
