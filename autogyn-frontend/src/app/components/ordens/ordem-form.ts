@@ -1,20 +1,22 @@
-// src/app/components/ordens/ordem-form.component.ts
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { ClienteService } from 'src/app/services/cliente.service';
 import { VeiculoService } from 'src/app/services/veiculo.service';
 import { OrdemService } from 'src/app/services/ordem.service';
 import { PecaService } from 'src/app/services/peca.service';
+
 import { Cliente } from 'src/app/models/cliente.model';
 import { Veiculo } from 'src/app/models/veiculo.model';
 import { PecaEstoque } from 'src/app/models/peca.model';
+
 import { MessageService } from 'primeng/api';
 
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { InputTextModule } from 'primeng/inputtext';
-import { CalendarModule } from 'primeng/calendar';
+import { DatePickerModule } from 'primeng/datepicker';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { Textarea } from 'primeng/textarea';
@@ -27,12 +29,12 @@ import { Textarea } from 'primeng/textarea';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    DropdownModule,
+    SelectModule,
     InputTextModule,
-    Textarea,
-    CalendarModule,
+    DatePickerModule,
     ButtonModule,
-    ToastModule
+    ToastModule,
+    Textarea
   ],
   providers: [MessageService]
 })
@@ -71,15 +73,16 @@ export class OrdemFormComponent {
     return this.ordemForm.get('itens') as FormArray;
   }
 
-  adicionarItem() {
-    const item = this.fb.group({
-      descricao: ['', Validators.required],
-      tipo: ['SERVICO', Validators.required],
-      quantidade: [1, [Validators.required, Validators.min(1)]],
-      valorUnitario: [0, [Validators.required, Validators.min(0)]],
-      pecaEstoqueId: [null]
+  adicionarItem(): void {
+    const itemGroup = this.fb.group({
+      tipo: ['PECA'],
+      quantidade: [1, Validators.required],
+      valorUnitario: [0],
+      pecaEstoqueId: [null, Validators.required],
+      descricao: ['']
     });
-    this.itens.push(item);
+
+    this.itens.push(itemGroup);
   }
 
   removerItem(index: number) {
