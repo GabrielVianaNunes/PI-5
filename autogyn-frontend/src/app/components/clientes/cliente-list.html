@@ -1,6 +1,8 @@
+<!-- cliente-list.html atualizado com padrão de botões -->
 <div class="cliente-list-container">
   <h2 class="cliente-title">Lista de Clientes</h2>
 
+  <!-- Botão Novo Cliente -->
   <div class="nova-cliente-button">
     <button
       pButton
@@ -11,6 +13,7 @@
     ></button>
   </div>
 
+  <!-- Tabela de Clientes -->
   <p-table
     [value]="clientes"
     [paginator]="true"
@@ -25,7 +28,7 @@
         <th>Documento</th>
         <th>Telefone</th>
         <th>Endereço</th>
-        <th>Ações</th>
+        <th style="text-align: center; width: 130px;">Ações</th>
       </tr>
     </ng-template>
 
@@ -39,18 +42,23 @@
         <td class="acoes">
           <button
             pButton
+            label="Editar"
             icon="pi pi-pencil"
-            class="p-button-text p-button-sm p-button-rounded p-button-info"
+            iconPos="left"
+            class="p-button-sm p-button-rounded p-button-outlined p-button-info"
             [routerLink]="['/clientes/editar', cliente.id]"
-            pTooltip="Editar"
+            pTooltip="Editar Cliente"
             tooltipPosition="top"
           ></button>
+
           <button
             pButton
+            label="Excluir"
             icon="pi pi-trash"
-            class="p-button-text p-button-sm p-button-rounded p-button-danger"
+            iconPos="left"
+            class="p-button-sm p-button-rounded p-button-outlined p-button-danger"
             (click)="excluir(cliente.id!)"
-            pTooltip="Excluir"
+            pTooltip="Excluir Cliente"
             tooltipPosition="top"
           ></button>
         </td>
@@ -58,12 +66,12 @@
     </ng-template>
   </p-table>
 
+  <!-- Botão Voltar para Home -->
   <div class="voltar-home-button">
     <button
       pButton
-      type="button"
-      label="Voltar para Home"
       icon="pi pi-arrow-left"
+      label="Voltar para Home"
       class="submit-button"
       [routerLink]="['/home']"
     ></button>
