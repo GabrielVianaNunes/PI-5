@@ -6,10 +6,10 @@ import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } fr
 import { Router } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { VeiculoService } from 'src/app/services/veiculo.service';
-import { OrdemService } from 'src/app/services/ordem.service'; // NOVO
+import { OrdemService } from 'src/app/services/ordem.service';
 import { Cliente } from 'src/app/models/cliente.model';
 import { Veiculo } from 'src/app/models/veiculo.model';
-import { OrdemServico } from 'src/app/models/ordem.model'; // Tipagem opcional
+import { OrdemServico } from 'src/app/models/ordem.model';
 import { MessageService } from 'primeng/api';
 import { PecaService } from 'src/app/services/peca.service';
 import { PecaEstoque } from 'src/app/models/peca.model';
@@ -41,7 +41,7 @@ export class OrdemFormComponent {
   private clienteService = inject(ClienteService);
   private veiculoService = inject(VeiculoService);
   private ordemService = inject(OrdemService);
-  private pecaService = inject(PecaService); // ✅ NOVO
+  private pecaService = inject(PecaService);
   private messageService = inject(MessageService);
   private router = inject(Router);
 
@@ -57,12 +57,18 @@ export class OrdemFormComponent {
 
   clientes: Cliente[] = [];
   veiculos: Veiculo[] = [];
-  pecas: PecaEstoque[] = []; // ✅ NOVO
+  pecas: PecaEstoque[] = [];
+
+  // ✅ NOVO: opções com label para dropdown de tipo
+  tipoOpcoes = [
+    { label: 'Serviço', value: 'SERVICO' },
+    { label: 'Peça', value: 'PECA' }
+  ];
 
   ngOnInit() {
     this.clienteService.getAll().subscribe({ next: c => this.clientes = c });
     this.veiculoService.getAll().subscribe({ next: v => this.veiculos = v });
-    this.pecaService.getAll().subscribe({ next: p => this.pecas = p }); // ✅ NOVO
+    this.pecaService.getAll().subscribe({ next: p => this.pecas = p });
   }
 
   get itens(): FormArray {
@@ -72,11 +78,16 @@ export class OrdemFormComponent {
   adicionarItem() {
     const item = this.fb.group({
       descricao: ['', Validators.required],
-      tipo: ['SERVICO', Validators.required],
+      tipo: ['PECA', Validators.required],
       quantidade: [1, [Validators.required, Validators.min(1)]],
       valorUnitario: [0, Validators.required],
       pecaEstoqueId: [null]
     });
+
+    item.get('tipo')?.valueChanges.subscribe(() => {
+      item.get('pecaEstoqueId')?.updateValueAndValidity();
+    });
+
     this.itens.push(item);
   }
 

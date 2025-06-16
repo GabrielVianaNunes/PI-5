@@ -72,18 +72,18 @@ textarea {
   background-color: #ffffff;
   border: 1px solid #d0d0d0;
   border-radius: 10px;
-  position: relative;
 }
 
-.item-card button {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
+.item-card button.p-button-danger {
   background-color: #e53935 !important;
   border: none;
+  align-self: end;
+  justify-self: start;
+  width: fit-content;
+  white-space: nowrap;
 }
 
-.item-card button:hover {
+.item-card button.p-button-danger:hover {
   background-color: #c62828 !important;
 }
 
