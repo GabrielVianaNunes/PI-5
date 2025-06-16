@@ -5,24 +5,14 @@
 
     <div class="p-field">
       <label for="veiculoId">Veículo</label>
-      <p-dropdown
-        [options]="veiculos"
-        optionLabel="modelo"
-        optionValue="id"
-        formControlName="veiculoId"
-        placeholder="Selecione o veículo"
-      ></p-dropdown>
+      <p-dropdown [options]="veiculos" optionLabel="modelo" optionValue="id" formControlName="veiculoId"
+        placeholder="Selecione o veículo"></p-dropdown>
     </div>
 
     <div class="p-field">
       <label for="clienteId">Cliente</label>
-      <p-dropdown
-        [options]="clientes"
-        optionLabel="nome"
-        optionValue="id"
-        formControlName="clienteId"
-        placeholder="Selecione o cliente"
-      ></p-dropdown>
+      <p-dropdown [options]="clientes" optionLabel="nome" optionValue="id" formControlName="clienteId"
+        placeholder="Selecione o cliente"></p-dropdown>
     </div>
 
     <div class="p-field-group">
@@ -49,15 +39,10 @@
 
     <div class="items-section">
       <h3>Itens da Ordem</h3>
-      <button
-        type="button"
-        pButton
-        icon="pi pi-plus"
-        label="Adicionar Item"
-        class="add-item-button"
-        (click)="adicionarItem()"
-      ></button>
+      <button type="button" pButton icon="pi pi-plus" label="Adicionar Item" class="add-item-button"
+        (click)="adicionarItem()"></button>
 
+      <!-- ... dentro de *ngFor dos itens ... -->
       <div *ngFor="let item of itens.controls; let i = index" [formGroupName]="i" class="item-card">
         <div class="p-field">
           <label>Descrição</label>
@@ -67,6 +52,13 @@
         <div class="p-field">
           <label>Tipo</label>
           <p-dropdown [options]="['SERVICO', 'PECA']" formControlName="tipo"></p-dropdown>
+        </div>
+
+        <!-- Campo condicional para PECA -->
+        <div class="p-field" *ngIf="item.get('tipo')?.value === 'PECA'">
+          <label>Peça</label>
+          <p-dropdown [options]="pecas" optionLabel="nome" optionValue="id" formControlName="pecaEstoqueId"
+            placeholder="Selecione a peça"></p-dropdown>
         </div>
 
         <div class="p-field">
@@ -81,12 +73,14 @@
 
         <button type="button" pButton icon="pi pi-trash" class="p-button-danger" (click)="removerItem(i)"></button>
       </div>
+
     </div>
 
     <!-- Botões lado a lado -->
     <div class="button-group">
       <button pButton type="submit" label="Salvar Ordem de Serviço" class="submit-button"></button>
-      <button type="button" pButton icon="pi pi-arrow-left" label="Voltar para Lista" class="submit-button" (click)="voltarParaLista()"></button>
+      <button type="button" pButton icon="pi pi-arrow-left" label="Voltar para Lista" class="submit-button"
+        (click)="voltarParaLista()"></button>
     </div>
 
   </form>

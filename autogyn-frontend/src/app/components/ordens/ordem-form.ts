@@ -6,9 +6,13 @@ import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } fr
 import { Router } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { VeiculoService } from 'src/app/services/veiculo.service';
+import { OrdemService } from 'src/app/services/ordem.service'; // NOVO
 import { Cliente } from 'src/app/models/cliente.model';
 import { Veiculo } from 'src/app/models/veiculo.model';
+import { OrdemServico } from 'src/app/models/ordem.model'; // Tipagem opcional
 import { MessageService } from 'primeng/api';
+import { PecaService } from 'src/app/services/peca.service';
+import { PecaEstoque } from 'src/app/models/peca.model';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -36,6 +40,8 @@ export class OrdemFormComponent {
   private fb = inject(FormBuilder);
   private clienteService = inject(ClienteService);
   private veiculoService = inject(VeiculoService);
+  private ordemService = inject(OrdemService);
+  private pecaService = inject(PecaService); // ✅ NOVO
   private messageService = inject(MessageService);
   private router = inject(Router);
 
@@ -51,10 +57,12 @@ export class OrdemFormComponent {
 
   clientes: Cliente[] = [];
   veiculos: Veiculo[] = [];
+  pecas: PecaEstoque[] = []; // ✅ NOVO
 
   ngOnInit() {
     this.clienteService.getAll().subscribe({ next: c => this.clientes = c });
     this.veiculoService.getAll().subscribe({ next: v => this.veiculos = v });
+    this.pecaService.getAll().subscribe({ next: p => this.pecas = p }); // ✅ NOVO
   }
 
   get itens(): FormArray {
@@ -67,7 +75,7 @@ export class OrdemFormComponent {
       tipo: ['SERVICO', Validators.required],
       quantidade: [1, [Validators.required, Validators.min(1)]],
       valorUnitario: [0, Validators.required],
-      pecaEstoqueId: [null] // usado apenas se tipo = PECA
+      pecaEstoqueId: [null]
     });
     this.itens.push(item);
   }
@@ -78,9 +86,17 @@ export class OrdemFormComponent {
 
   onSubmit() {
     if (this.ordemForm.valid) {
-      // Aqui no futuro faremos a chamada ao OrdemService (ainda a ser criado)
-      this.messageService.add({ severity: 'success', summary: 'Ordem criada!', detail: 'Ordem de serviço registrada com sucesso.' });
-      this.router.navigate(['/ordens']);
+      const ordem: OrdemServico = this.ordemForm.value;
+
+      this.ordemService.create(ordem).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Ordem criada!', detail: 'Ordem de serviço registrada com sucesso.' });
+          this.router.navigate(['/ordens']);
+        },
+        error: () => {
+          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao criar ordem de serviço.' });
+        }
+      });
     } else {
       this.messageService.add({ severity: 'warn', summary: 'Formulário inválido', detail: 'Preencha todos os campos obrigatórios.' });
     }

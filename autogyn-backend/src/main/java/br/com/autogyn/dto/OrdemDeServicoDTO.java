@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotNull;
 
 public class OrdemDeServicoDTO {
 
+    @NotNull(message = "ID do cliente é obrigatório")
+    private Long clienteId;
+
     @NotNull(message = "ID do veículo é obrigatório")
     private Long veiculoId;
 
@@ -26,13 +29,22 @@ public class OrdemDeServicoDTO {
     public OrdemDeServicoDTO() {
     }
 
-    public OrdemDeServicoDTO(Long veiculoId, LocalDate dataAbertura, LocalDate dataFechamento, String status,
-            List<ItemOrdemServicoDTO> itens) {
+    public OrdemDeServicoDTO(Long clienteId, Long veiculoId, LocalDate dataAbertura, LocalDate dataFechamento, String status,
+                             List<ItemOrdemServicoDTO> itens) {
+        this.clienteId = clienteId;
         this.veiculoId = veiculoId;
         this.dataAbertura = dataAbertura;
         this.dataFechamento = dataFechamento;
         this.status = status;
         this.itens = itens;
+    }
+
+    public Long getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
     }
 
     public Long getVeiculoId() {

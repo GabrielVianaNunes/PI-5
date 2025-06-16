@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OrdemService {
-  private readonly apiUrl = 'http://localhost:8095/api/ordens';
+  private readonly apiUrl = 'http://localhost:8095/api/ordens-servico';
 
   constructor(private http: HttpClient) {}
 

@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 
 import br.com.autogyn.dto.ItemOrdemServicoDTO;
 import br.com.autogyn.dto.OrdemDeServicoDTO;
+import br.com.autogyn.model.Cliente;
 import br.com.autogyn.model.ItemOrdemServico;
 import br.com.autogyn.model.OrdemDeServico;
 import br.com.autogyn.model.PecaEstoque;
 import br.com.autogyn.model.Veiculo;
+import br.com.autogyn.repository.ClienteRepository;
 import br.com.autogyn.repository.ItemOrdemServicoRepository;
 import br.com.autogyn.repository.OrdemDeServicoRepository;
 import br.com.autogyn.repository.PecaEstoqueRepository;
@@ -25,16 +27,19 @@ public class OrdemDeServicoService {
     private final ItemOrdemServicoRepository itemRepository;
     private final VeiculoRepository veiculoRepository;
     private final PecaEstoqueRepository pecaEstoqueRepository;
+    private final ClienteRepository clienteRepository;
 
     public OrdemDeServicoService(
             OrdemDeServicoRepository ordemRepository,
             ItemOrdemServicoRepository itemRepository,
             VeiculoRepository veiculoRepository,
-            PecaEstoqueRepository pecaEstoqueRepository) {
+            PecaEstoqueRepository pecaEstoqueRepository,
+            ClienteRepository clienteRepository) {
         this.ordemRepository = ordemRepository;
         this.itemRepository = itemRepository;
         this.veiculoRepository = veiculoRepository;
         this.pecaEstoqueRepository = pecaEstoqueRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     public List<OrdemDeServico> listarTodas() {
@@ -50,10 +55,18 @@ public class OrdemDeServicoService {
         Veiculo veiculo = veiculoRepository.findById(dto.getVeiculoId())
                 .orElseThrow(() -> new EntityNotFoundException("Veículo não encontrado com ID: " + dto.getVeiculoId()));
 
+        Cliente cliente = clienteRepository.findById(dto.getClienteId())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com ID: " + dto.getClienteId()));
+
         OrdemDeServico ordem = new OrdemDeServico();
         ordem.setVeiculo(veiculo);
+        ordem.setCliente(cliente);
         ordem.setDataAbertura(dto.getDataAbertura().atStartOfDay());
-        ordem.setDataFechamento(dto.getDataFechamento().atStartOfDay());
+
+        if (dto.getDataFechamento() != null) {
+            ordem.setDataFechamento(dto.getDataFechamento().atStartOfDay());
+        }
+
         ordem.setStatus(dto.getStatus());
 
         List<ItemOrdemServico> itens = new ArrayList<>();
@@ -68,7 +81,6 @@ public class OrdemDeServicoService {
 
             BigDecimal valorUnitario;
 
-            // Integração com o estoque
             if ("PECA".equalsIgnoreCase(itemDTO.getTipo())) {
                 if (itemDTO.getPecaEstoqueId() == null) {
                     throw new IllegalArgumentException("ID da peça em estoque é obrigatório para itens do tipo PECA.");
@@ -81,7 +93,6 @@ public class OrdemDeServicoService {
                     throw new IllegalArgumentException("Estoque insuficiente para a peça: " + peca.getNome());
                 }
 
-                // Atualiza quantidade no estoque
                 peca.setQuantidade(peca.getQuantidade() - itemDTO.getQuantidade());
                 pecaEstoqueRepository.save(peca);
 
